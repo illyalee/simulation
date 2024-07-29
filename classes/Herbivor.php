@@ -27,4 +27,12 @@ class Herbivor
     {
         return $this->y;
     }
+    public function setCoordX($x)
+    {
+        $this->x = $x;
+    }
+    public function setCoordY($y)
+    {
+        $this->y = $y;
+    }
 }

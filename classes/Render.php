@@ -7,14 +7,15 @@ class Render
     ];
     public function showMap($map)
     {
-        var_dump($map);
         foreach ($map as $row) {
             echo "\n";
             foreach ($row as $cell) {
                 if ($cell instanceof Herbivor) {
-                    echo $this->animal_icons[$cell->getName()];
+                    echo " " . $this->animal_icons[$cell->getName()] . " ";
+
+                    continue;
                 }
-                echo " . ";
+                echo " .. ";
             }
         }
         echo "\n";
