@@ -17,6 +17,7 @@ class TurnActions
     }
     public function move_piece()
     {
+        var_dump($bfs->start_search($map->getMap(), 0, 1, 1, 5));
 
     }
     public function getAnimal($map, $y, $x)
