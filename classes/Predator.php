@@ -17,9 +17,12 @@ class Predator extends Creature
     {
         // $coords = $bfs->start_search($map, $this->y, $this->x, 'predator');
         // var_dump($coords);
-        // $this->y = $coords["y"];
-        // $this->x = $coords["x"];
-
+        // $oldy = $this->y;
+        // $oldx = $this->x;
+        // $this->y = $bfs["y"];
+        // $this->x = $bfs["x"];
+        // $map[$oldy][$oldx] = null;
+        return $map;
     }
     public function getCoordX()
     {
