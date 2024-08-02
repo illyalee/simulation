@@ -1,6 +1,8 @@
 <?php
+
 require_once "classes/Creature.php";
-class Herbivor extends Creature
+require_once "classes/Creature.php";
+class Predator extends Creature
 {
     public $x;
     public $y;
@@ -11,16 +13,13 @@ class Herbivor extends Creature
         $this->x = $x;
         $this->y = $y;
     }
-
     public function make_move($map, $bfs)
     {
-        $coords = $bfs->start_search($map, $this->y, $this->x, 'herbivor');
-        var_dump($coords);
-    }
+        // $coords = $bfs->start_search($map, $this->y, $this->x, 'predator');
+        // var_dump($coords);
+        // $this->y = $coords["y"];
+        // $this->x = $coords["x"];
 
-    public function getName()
-    {
-        return $this->name;
     }
     public function getCoordX()
     {
@@ -30,12 +29,8 @@ class Herbivor extends Creature
     {
         return $this->y;
     }
-    public function setCoordX($x)
+    public function getName()
     {
-        $this->x = $x;
-    }
-    public function setCoordY($y)
-    {
-        $this->y = $y;
+        return $this->name;
     }
 }

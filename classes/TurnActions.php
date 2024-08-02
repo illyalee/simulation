@@ -2,6 +2,29 @@
 
 class TurnActions
 {
+    public BFS $bfs;
+    public function __construct($bfs)
+    {
+        $this->bfs = $bfs;
+    }
+    public function turn_actions(Map $map)
+    {
+        // foreach ($map->getMap() as $row) {
+        //     foreach ($row as $cell) {
+        //         if ($cell instanceof Predator) {
+        //             $cell->make_move($map->getMap(), $this->bfs);
+        //         }
+        //         $map->changeObjectsPostion();
+        //     }
+        // }
+        foreach ($row as $cell) {
+            if ($cell instanceof Predator) {
+                $cell->make_move($map->getMap(), $this->bfs);
+            }
+            $map->changeObjectsPostion();
+        }
+
+    }
     public function move_piece_manualy(Map $mapClass, $y, $x, $y2, $x2)
     {$map = $mapClass->getMap();
         $animal = $this->getAnimal($map, $y, $x);
@@ -15,10 +38,11 @@ class TurnActions
         $map[$animal->getCoordY()][$animal->getCoordX()] = $animal;
         return $map;
     }
-    public function move_piece()
+    public function move_piece($map, $y, $x, $y2, $x2)
     {
-        var_dump($bfs->start_search($map->getMap(), 0, 1, 1, 5));
-
+        $coords = $this->bfs->start_search($map->getMap(), $y, $x, $y2, $x2);
+        $this->move_piece_manualy($map, $y, $x, $coords['y'], $coords['x']);
+        return $coords;
     }
     public function getAnimal($map, $y, $x)
     {

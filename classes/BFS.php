@@ -2,7 +2,7 @@
 
 class BFS
 {
-    public function start_search($map, $start_node_y, $start_node_x, $goal_node_y, $goal_node_x)
+    public function start_search($map, $start_node_y, $start_node_x, $type)
     {
         $newMap = $this->prepareCopyMap($map);
         $queue = [];
@@ -10,10 +10,12 @@ class BFS
         $numberOfIteration = 0;
         while (count($queue) !== 0) {
             $node = array_shift($queue);
-            if ($node["coords"]['x'] == $goal_node_x & $node["coords"]['y'] == $goal_node_y) {
-                echo "WIN: coords are:";
+            if ($node['item'] instanceof Herbivor) {
                 if ($numberOfIteration == 1) {return ["y" => $node["coords"]['y'], "x" => $node['coords']['x']];} else {return $node['parent_coords'];};
             }
+            // if ($node['item'] instanceof Predator) {
+            //     if ($numberOfIteration == 1) {return ["y" => $node["coords"]['y'], "x" => $node['coords']['x']];} else {return $node['parent_coords'];};
+            // }
             $newMap[$node['coords']['y']][$node['coords']['x']]['visited'] = true;
             $childs_arr = $this->getChildsFromNode($newMap, $node);
             $numberOfIteration += 1;
@@ -42,7 +44,7 @@ class BFS
             $row = [];
             for ($c = 0; $c <= count($map[$i]) - 1; $c++) {
                 $cell = $map[$i][$c];
-                $item = $cell instanceof Herbivor ? $cell : null;
+                $item = $cell instanceof Creature ? $cell : null;
                 $y = $i;
                 $x = $c;
                 $coords = ['y' => $y, 'x' => $x];

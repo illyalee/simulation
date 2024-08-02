@@ -1,13 +1,11 @@
 <?php
 class Actions
 {
-    public InitActions $init_actions;
-    public TurnActions $turn_actions;
-    public BFS $bfs;
-    public function __construct($init_actions, $turn_actions, $bfs)
+    public InitActions $initActions;
+    public TurnActions $turnActions;
+    public function __construct($initActions, $turnActions)
     {
-        $this->init_actions = $init_actions;
-        $this->turn_actions = $turn_actions;
-        $this->bfs = $bfs;
+        $this->initActions = $initActions;
+        $this->turnActions = $turnActions;
     }
 }

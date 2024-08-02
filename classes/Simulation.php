@@ -5,23 +5,29 @@ class Simulation
     public Map $map;
     public Render $render;
     public Actions $actions;
-    public function __construct($map, $render, $actions)
+    public function __construct($map, $render, $actions, $animals)
     {
         $this->map = $map;
         $this->render = $render;
         $this->actions = $actions;
+        $this->actions->initActions->init_actions($this->map, $animals);
     }
 
     public function next_turn()
     {
-// просимулировать и отрендерить один ход
-        $this->render->showMap($this->map->getMap());
-        $this->actions->turn_actions->move_piece_manualy($this->map, 0, 2, 1, 1);
-        $this->render->showMap($this->map->getMap());
+        // $this->actions->turn_actions->move_piece($this->map, 0, 2, 1, 1);
+        $this->actions->turnActions->turn_actions($this->map);
+
     }
     public function start_simulation()
     {
-//- запустить бесконечный цикл симуляции и рендерингаa
+
+        $this->render->showMap($this->map->getMap());
+        for ($i = 0; $i < 15; $i++) {
+            sleep(1);
+            $this->next_turn();
+            $this->render->showMap($this->map->getMap());
+        }
     }
     public function pause_simulation()
     {
