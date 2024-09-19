@@ -7,7 +7,7 @@ abstract class Creature
     {
         $this->$name = $name;
     }
-    public function make_move($map, BFS $bfs)
+    public function make_move()
     {
 
     }

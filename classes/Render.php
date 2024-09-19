@@ -13,7 +13,6 @@ class Render
             foreach ($row as $cell) {
                 if ($cell instanceof Creature) {
                     echo $this->animal_icons[$cell->getName()];
-
                     continue;
                 }
                 echo "🟧";
