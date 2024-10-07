@@ -22,6 +22,6 @@ class TurnActions
         $element = $mapArr[$start[0]][$start[1]];
         $mapArr[$start[0]][$start[1]] = null;
         $mapArr[$end[0]][$end[1]] = $element;
-        $map->setMap($mapArr); // replace old map with new map
+        $map->setMap($mapArr); // replace old map with new map ggs
     }
 }

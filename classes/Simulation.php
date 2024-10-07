@@ -11,7 +11,6 @@ class Simulation
         $this->render = $render;
         $this->actions = $actions;
         $this->actions->initActions->setPiecesInMap($map, $animals);
-
     }
     public function next_turn()
     {
