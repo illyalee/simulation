@@ -15,5 +15,6 @@ $turn_actions = new TurnActions();
 $actions = new Actions($init_actions, $turn_actions);
 $map = new Map();
 $simulation = new Simulation($map, $render, $actions, [$rabbit, $wolf]);
+//с телефона 
 
 $simulation->start_simulation();
