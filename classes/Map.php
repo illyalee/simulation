@@ -19,9 +19,6 @@ class Map
         return $this->map;
     }
 
-    /**
-     * @param array[] $map
-     */
     public function setMap(array $map): void
     {
         $this->map = $map;
