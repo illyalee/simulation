@@ -7,10 +7,10 @@ class Map
     public function __construct()
     {
         $this->map = [
-            [null, null, null, null],
-            [null, null, null, null],
-            [null, null, null, null],
-            [null, null, null, null]
+            [null, null, null, null, null],
+            [null, null, null, null, null],
+            [null, null, null, null, null],
+            [null, null, null, null, null]
         ];
     }
 
