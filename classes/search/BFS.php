@@ -10,7 +10,7 @@ class BFS
         $numberOfIteration = 0;
         while (count($queue) !== 0) {
             $node = array_shift($queue);
-            if ($node['item'] instanceof Herbivor) {
+            if ($node['item'] instanceof Herbivore) {
                 if ($numberOfIteration == 1) {return ["y" => $node["coords"]['y'], "x" => $node['coords']['x']];} else {return $node['parent_coords'];};
             }
             // if ($node['item'] instanceof Predator) {
