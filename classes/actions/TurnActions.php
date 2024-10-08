@@ -5,20 +5,24 @@ class TurnActions
     public function __construct()
     {
     }
-public function moveAllCreatures(Map $map)
+public function moveAllCreatures(Map $map): void
 {
     //мы работает с копией карты
-$mapArr = $map->getMap();
-forEach($mapArr as $mapRow)
-{
-    foreach ($mapRow as $cell)
-    {
-
-        if($cell instanceof Creature) {
-            $cell->make_move($map);
+    for ($i = 0; $i < count($map->mapArr); $i++) {
+        for ($j = 0; $j < count($map->mapArr[$i]); $j++) {
+            $cell = $map->mapArr[$i][$j];
+            if ($cell instanceof Creature) {
+                echo 'cell start';
+                echo 'var_dump ';
+                var_dump($cell);
+                echo 'var_dump  end';
+                $cell->make_move($map);
+                echo 'cell end';
+                // После перемещения обновляем массив карты
+//                $map->mapArr[$i][$j] = null;  // Удаляем объект после его хода
+            }
         }
     }
-}
 }
     public function getUserCoords()
     {
@@ -32,10 +36,8 @@ forEach($mapArr as $mapRow)
         //manual move Object from one cell to another
         $start = $this->getUserCoords();
         $end = $this->getUserCoords();
-        $mapArr = $map->getMap(); // copy of map array
-        $element = $mapArr[$start[0]][$start[1]];
-        $mapArr[$start[0]][$start[1]] = null;
-        $mapArr[$end[0]][$end[1]] = $element;
-        $map->setMap($mapArr); // replace old map with new map ggs
+        $obj = $map->mapArr[$start[0]][$start[1]];
+        $map->mapArr[$start[0]][$start[1]] = null;
+        $map->mapArr[$end[0]][$end[1]] = $obj;
     }
 }

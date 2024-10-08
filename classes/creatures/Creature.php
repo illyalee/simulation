@@ -2,10 +2,14 @@
 
 abstract class Creature
 {
+    public Int $y;
+    public Int $x;
     public String $name;
-    public function __construct($name)
+    public function __construct($name, $y, $x)
     {
-        $this->$name = $name;
+        $this->name = $name;
+        $this->y = $y;
+        $this->x = $x;
     }
     abstract public function make_move(Map $map);
 

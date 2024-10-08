@@ -2,25 +2,15 @@
 
 class Map
 {
-    public $map;
+    public array $mapArr;
 
     public function __construct()
     {
-        $this->map = [
+        $this->mapArr = [
             [null, null, null, null, null],
             [null, null, null, null, null],
             [null, null, null, null, null],
             [null, null, null, null, null]
         ];
-    }
-
-    public function getMap()
-    {
-        return $this->map;
-    }
-
-    public function setMap(array $map): void
-    {
-        $this->map = $map;
     }
 }
