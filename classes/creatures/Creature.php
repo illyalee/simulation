@@ -2,15 +2,15 @@
 
 abstract class Creature
 {
-    public $name;
+    public String $name;
     public function __construct($name)
     {
         $this->$name = $name;
     }
-    public function make_move()
-    {
+    abstract public function make_move(Map $map);
 
-    }
+    abstract public function changePositionOnTheMap(Map $map);
+    abstract public function validateMove();
     public function getName()
     {
     }

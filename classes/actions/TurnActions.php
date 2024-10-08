@@ -5,7 +5,21 @@ class TurnActions
     public function __construct()
     {
     }
+public function moveAllCreatures(Map $map)
+{
+    //мы работает с копией карты
+$mapArr = $map->getMap();
+forEach($mapArr as $mapRow)
+{
+    foreach ($mapRow as $cell)
+    {
 
+        if($cell instanceof Creature) {
+            $cell->make_move($map);
+        }
+    }
+}
+}
     public function getUserCoords()
     {
         $y = readline('Y: ');
@@ -13,9 +27,9 @@ class TurnActions
         return [$y, $x];
     }
 
-    public function movePieceManualy(Map $map)
+    public function movePieceManually(Map $map)
     {
-        //manual mova Object from one cell to another
+        //manual move Object from one cell to another
         $start = $this->getUserCoords();
         $end = $this->getUserCoords();
         $mapArr = $map->getMap(); // copy of map array

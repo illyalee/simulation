@@ -14,11 +14,14 @@ class Simulation
     }
     public function next_turn()
     {
-        for($i = 0; $i < 5; $i++)
-        {
-            $this->actions->turnActions->movePieceManualy($this->map);
-            $this->render->showMap($this->map->getMap());
-        }
+        $this->render->showMap($this->map->getMap());
+//        for($i = 0; $i < 5; $i++)
+//        {
+//            $this->actions->turnActions->movePieceManually($this->map);
+//            $this->render->showMap($this->map->getMap());
+//        }
+        $this->actions->turnActions->moveAllCreatures($this->map);
+        $this->render->showMap($this->map->getMap());
         }
     public function start_simulation()
     {
