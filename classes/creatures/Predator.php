@@ -3,10 +3,10 @@
 require_once "classes/creatures/Creature.php";
 class Predator extends Creature
 {
-    public function __construct($name, $y, $x)
+    public function __construct($name, $health, $y, $x)
     {
-        parent::__construct($name, $y, $x);
-    }    public function make_move(Map $map)
+        parent::__construct($name, $health, $y, $x);
+    }    public function make_move(Map $map, $pathSearch)
     {
        //существо получило координаты след хода
        //через поиск пути
@@ -24,7 +24,7 @@ class Predator extends Creature
     {
         // TODO: Implement changePositionOnTheMap() method.
     }
-    public function validateMove()
+    public function validateMove(Map $map, $nextY, $nextX)
     {
         // TODO: Implement validateMove() method.
     }
