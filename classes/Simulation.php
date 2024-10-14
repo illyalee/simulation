@@ -5,6 +5,7 @@ class Simulation
     public Map $map;
     public Render $render;
     public Actions $actions;
+
     public function __construct($map, $render, $actions, $animals)
     {
         $this->map = $map;
@@ -12,6 +13,7 @@ class Simulation
         $this->actions = $actions;
         $this->actions->initActions->setPiecesInMap($map, $animals);
     }
+
     public function next_turn()
     {
         $this->render->showMap($this->map->mapArr);
@@ -22,7 +24,8 @@ class Simulation
 //        }
         $this->actions->turnActions->moveAllCreatures($this->map);
         $this->render->showMap($this->map->mapArr);
-        }
+    }
+
     public function start_simulation()
     {
         $this->next_turn();

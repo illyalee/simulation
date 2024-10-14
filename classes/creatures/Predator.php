@@ -1,33 +1,46 @@
 <?php
 
 require_once "classes/creatures/Creature.php";
+
 class Predator extends Creature
 {
-    public function __construct($name, $health, $y, $x)
+    public function __construct($name, $health, $power, $y, $x)
     {
-        parent::__construct($name, $health, $y, $x);
-    }    public function make_move(Map $map, $pathSearch)
-    {
-       //существо получило координаты след хода
-       //через поиск пути
-       // поиск пути отдает только координаты след точки, он не проверяет ести ли там жертва
-       //пока использую готовые координаты
-//       $nextMoveCoords = [3,4];
-       //дале мы проверяем можно ли сделать ход, атаковать расплодиться
-       //существо изменило положение на карте
-//        $obj = $map->mapArr[$this->y][$this->x];
-//        $map->mapArr[$this->y][$this->x] = null;
-//        $map->mapArr[$nextMoveCoords[0]][$nextMoveCoords[1]] = $obj;
+        parent::__construct($name, $health, $power, $y, $x);
     }
 
-    public function changePositionOnTheMap(Map $map)
+    public function make_move(Map $map, $pathSearch)
     {
-        // TODO: Implement changePositionOnTheMap() method.
+        $prey = $this->getCreatureAround($this->y, $this->x, $map);
+        if($prey) {
+            $this->attack($prey, $map);
+        }
+
     }
-    public function validateMove(Map $map, $nextY, $nextX)
+
+    public function getCreatureAround($y, $x, Map $map)
     {
-        // TODO: Implement validateMove() method.
+        $attackRange = 1;
+        $leftSideObjects = ($x - 1) >= 0 ? $map->mapArr[$y][$x - 1] : null;
+        $rightSideObjects = ($x + 1) < count($map->mapArr[0]) ? $map->mapArr[$y][$x + 1] : null;
+        $upSideObjects = ($y - 1) >= 0 ? $map->mapArr[$y - 1][$x] : null;
+        $downSideObjects = ($y + 1) < count($map->mapArr) ? $map->mapArr[$y + 1][$x] : null;
+        $herbivores = array($upSideObjects, $downSideObjects, $leftSideObjects, $rightSideObjects);
+        foreach ($herbivores as $herbivore) {
+            if ($herbivore == null) continue;
+            return $herbivore;
+        }
+        return null;
     }
+
+    public function attack($pray, Map $map): void
+    {
+        $pray->health = $pray->health - $this->health;
+        if ($pray->health <= 0) {
+            $map->mapArr[$pray->y][$pray->x] = null;
+        }
+    }
+
     public function getName()
     {
         return $this->name;
