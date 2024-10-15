@@ -2,16 +2,12 @@
 
 class TurnActions
 {
-    public PathSearch $pathSearch;
 
-    public function __construct($pathSearch)
-    {
-        $this->pathSearch = $pathSearch;
-    }
 
     public function moveAllCreatures(Map $map): void
     {
-        $map->mapArr[1][1]->make_move($map, $this->pathSearch);
+        $map->mapArr[0][0]->make_move($map);
+
         //мы работает с копией карты
 //        for ($i = 0; $i < count($map->mapArr); $i++) {
 //            for ($j = 0; $j < count($map->mapArr[$i]); $j++) {
@@ -21,6 +17,5 @@ class TurnActions
 //                }
 //            }
 //        }
-
     }
 }

@@ -17,13 +17,10 @@ class Simulation
     public function next_turn()
     {
         $this->render->showMap($this->map->mapArr);
-//        for($i = 0; $i < 5; $i++)
-//        {
-//            $this->actions->turnActions->movePieceManually($this->map);
-//            $this->render->showMap($this->map->mapArr);
-//        }
         $this->actions->turnActions->moveAllCreatures($this->map);
-        $this->render->showMap($this->map->mapArr);
+//        $this->render->showMap($this->map->mapArr);
+//        $this->actions->turnActions->moveAllCreatures($this->map);
+//        $this->render->showMap($this->map->mapArr);
     }
 
     public function start_simulation()

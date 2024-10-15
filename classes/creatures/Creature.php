@@ -16,13 +16,18 @@ abstract class Creature
         $this->health = $health;
         $this->power = $power;
     }
-public function getCreatureAround($y, $x, Map $map) {
 
-}
-    public function attack($pray, Map $map) {
+    public function getCreatureAround($y, $x, Map $map)
+    {
 
     }
-    abstract public function make_move(Map $map, $pathSearch);
+
+    public function attack($pray, Map $map)
+    {
+
+    }
+
+    abstract public function make_move(Map $map);
 
     public function getName()
     {

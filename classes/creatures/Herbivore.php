@@ -3,16 +3,10 @@ require_once "classes/creatures/Creature.php";
 
 class Herbivore extends Creature
 {
-    public function __construct($name, $health, $power, $y, $x)
-    {
-        parent::__construct($name, $health,$power, $y, $x);
-    }
-
-    public function make_move(Map $map, $pathSearch)
+    public function make_move(Map $map)
     {
 
     }
-
 
     public function getName()
     {

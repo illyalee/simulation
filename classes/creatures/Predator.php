@@ -1,26 +1,34 @@
 <?php
 
 require_once "classes/creatures/Creature.php";
+require_once "classes/search/PathSearch.php";
 
 class Predator extends Creature
 {
-    public function __construct($name, $health, $power, $y, $x)
+    public function make_move(Map $map): bool
     {
-        parent::__construct($name, $health, $power, $y, $x);
+
+//        $prey = $this->getCreatureAround($this->y, $this->x, $map);
+//        if ($prey) {
+//            $this->attack($prey, $map);
+//            return true;
+//        }
+        $this->changePosition($map);
+        return true;
     }
 
-    public function make_move(Map $map, $pathSearch)
+    public function changePosition(Map $map): bool
     {
-        $prey = $this->getCreatureAround($this->y, $this->x, $map);
-        if($prey) {
-            $this->attack($prey, $map);
-        }
-
+        $pathSearch = new PathSearch();
+        $coords = $pathSearch->search([0, 0], $map);
+        var_dump(array_reverse($coords));
+//        $map->move_object($this->y, $this->x, 2, 0);
+        return true;
     }
 
     public function getCreatureAround($y, $x, Map $map)
     {
-        $attackRange = 1;
+//        $attackRange = 1;
         $leftSideObjects = ($x - 1) >= 0 ? $map->mapArr[$y][$x - 1] : null;
         $rightSideObjects = ($x + 1) < count($map->mapArr[0]) ? $map->mapArr[$y][$x + 1] : null;
         $upSideObjects = ($y - 1) >= 0 ? $map->mapArr[$y - 1][$x] : null;
@@ -35,7 +43,8 @@ class Predator extends Creature
 
     public function attack($pray, Map $map): void
     {
-        $pray->health = $pray->health - $this->health;
+        $pray->health = $pray->health - $this->power;
+        echo $pray->health;
         if ($pray->health <= 0) {
             $map->mapArr[$pray->y][$pray->x] = null;
         }
