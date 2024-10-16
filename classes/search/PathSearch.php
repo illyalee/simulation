@@ -20,13 +20,11 @@ class PathSearch
             }
             foreach ($node->child_nodes as $child) {
                 if (!$child->visited) {
-                    echo 'child   ';
                     $child->visited = true;
                     $child->come_from = $node;
                     $queue->push($child);
                 }
             }
-            die;
 
         }
     }

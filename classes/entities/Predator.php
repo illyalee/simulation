@@ -32,10 +32,11 @@ class Predator extends Creature
         $rightSideObjects = ($x + 1) < count($map->mapArr[0]) ? $map->mapArr[$y][$x + 1] : null;
         $upSideObjects = ($y - 1) >= 0 ? $map->mapArr[$y - 1][$x] : null;
         $downSideObjects = ($y + 1) < count($map->mapArr) ? $map->mapArr[$y + 1][$x] : null;
-        $herbivores = array($upSideObjects, $downSideObjects, $leftSideObjects, $rightSideObjects);
-        foreach ($herbivores as $herbivore) {
-            if ($herbivore == null) continue;
-            return $herbivore;
+
+        $entities = array($upSideObjects, $downSideObjects, $leftSideObjects, $rightSideObjects);
+        foreach ($entities as $entity) {
+            if ($entity == null || $entity instanceof Predator || $entity instanceof Rock) continue;
+            return $entity;
         }
         return null;
     }

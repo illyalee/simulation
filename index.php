@@ -21,5 +21,4 @@ $actions = new Actions($init_actions, $turn_actions);
 $map = new Map();
 $simulation = new Simulation($map, $render, $actions, [$rabbit, $wolf, $rabbit2, $rock1, $rock2, $rock3]);
 
-
 $simulation->start_simulation();
