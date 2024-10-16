@@ -8,11 +8,11 @@ class Predator extends Creature
     public function make_move(Map $map): bool
     {
 
-//        $prey = $this->getCreatureAround($this->y, $this->x, $map);
-//        if ($prey) {
-//            $this->attack($prey, $map);
-//            return true;
-//        }
+        $prey = $this->getCreatureAround($this->y, $this->x, $map);
+        if ($prey) {
+            $this->attack($prey, $map);
+            return true;
+        }
         $this->changePosition($map);
         return true;
     }
@@ -20,15 +20,14 @@ class Predator extends Creature
     public function changePosition(Map $map): bool
     {
         $pathSearch = new PathSearch();
-        $coords = $pathSearch->search([0, 0], $map);
-        var_dump(array_reverse($coords));
-//        $map->move_object($this->y, $this->x, 2, 0);
+        $coords = $pathSearch->search([$this->y, $this->x], $map);
+        $map->move_object($this->y, $this->x, $coords[1]['y'], $coords[1]['x']);
         return true;
     }
 
     public function getCreatureAround($y, $x, Map $map)
     {
-//        $attackRange = 1;
+//      $attackRange = 1;
         $leftSideObjects = ($x - 1) >= 0 ? $map->mapArr[$y][$x - 1] : null;
         $rightSideObjects = ($x + 1) < count($map->mapArr[0]) ? $map->mapArr[$y][$x + 1] : null;
         $upSideObjects = ($y - 1) >= 0 ? $map->mapArr[$y - 1][$x] : null;

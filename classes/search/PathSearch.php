@@ -37,7 +37,7 @@ class PathSearch
             $coords[] = ['y' => $node->come_from->y, 'x' => $node->come_from->x];
             $node = $node->come_from;
         }
-        return $coords;
+        return array_reverse($coords);
     }
 
     private function isGoalNode(Node $node, $start_node_class): bool
@@ -70,13 +70,15 @@ class PathSearch
 
     private function addChildNodes($nodesArr): void
     {
-        for ($y = 0; $y < count($nodesArr); $y++) {
-            for ($x = 0; $x < count($nodesArr[0]); $x++) {
+        $mapWidth = count($nodesArr[0]);
+        $mapHeight = count($nodesArr);
+        for ($y = 0; $y < $mapHeight; $y++) {
+            for ($x = 0; $x < $mapWidth; $x++) {
                 $node = $nodesArr[$y][$x];
                 $leftSideChild = ($x - 1) >= 0 ? $nodesArr[$y][$x - 1] : null;
-                $rightSideChild = ($x + 1) < count($nodesArr[0]) ? $nodesArr[$y][$x + 1] : null;
+                $rightSideChild = ($x + 1) < $mapWidth ? $nodesArr[$y][$x + 1] : null;
                 $upSideChild = ($y - 1) >= 0 ? $nodesArr[$y - 1][$x] : null;
-                $downSideChild = ($y + 1) < count($nodesArr[0]) ? $nodesArr[$y + 1][$x] : null;
+                $downSideChild = ($y + 1) < $mapWidth ? $nodesArr[$y + 1][$x] : null;
                 foreach ([$leftSideChild, $rightSideChild, $upSideChild, $downSideChild] as $child) {
                     if ($child == null) continue;
                     $node->child_nodes[] = $child;

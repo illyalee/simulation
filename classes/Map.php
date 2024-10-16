@@ -7,11 +7,16 @@ class Map
     public function __construct()
     {
         $this->mapArr = [
-            [null, null, null, null, null],
-            [null, null, null, null, null],
-            [null, null, null, null, null],
-            [null, null, null, null, null],
-            [null, null, null, null, null]
+            [null, null, null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null, null, null]
         ];
     }
 

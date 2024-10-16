@@ -6,16 +6,17 @@ class Render
         "rabbit" => "🐇",
         "wolf" => '🐺',
     ];
+
     public function showMap($map)
     {
         foreach ($map as $row) {
             echo "\n";
             foreach ($row as $cell) {
                 if ($cell instanceof Creature) {
-                    echo $this->animal_icons[$cell->getName()];
+                    echo " " . $this->animal_icons[$cell->getName()];
                     continue;
                 }
-                echo "🟧";
+                echo " 🟫";
             }
         }
         echo "\n";
