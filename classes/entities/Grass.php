@@ -1,6 +1,7 @@
 <?php
+require_once "Entity.php";
 
-class Grass
+class Grass extends Entity
 {
 
 }

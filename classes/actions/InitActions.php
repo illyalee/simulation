@@ -11,6 +11,6 @@ class InitActions
         $map->mapArr[$pieces[3]->y][$pieces[3]->x] = $pieces[3];
         $map->mapArr[$pieces[4]->y][$pieces[4]->x] = $pieces[4];
         $map->mapArr[$pieces[5]->y][$pieces[5]->x] = $pieces[5];
-
+        $map->mapArr[$pieces[6]->y][$pieces[6]->x] = $pieces[6];
     }
 }

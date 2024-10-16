@@ -35,7 +35,7 @@ class Predator extends Creature
 
         $entities = array($upSideObjects, $downSideObjects, $leftSideObjects, $rightSideObjects);
         foreach ($entities as $entity) {
-            if ($entity == null || $entity instanceof Predator || $entity instanceof Rock) continue;
+            if ($entity == null || $entity instanceof Predator || $entity instanceof Rock || $entity instanceof Grass) continue;
             return $entity;
         }
         return null;

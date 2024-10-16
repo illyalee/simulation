@@ -5,7 +5,8 @@ class Render
     public $animal_icons = [
         "herbivore" => "🐇",
         "predator" => '🐺',
-        "rock" => '🪨'
+        "rock" => '🪨',
+        "grass" => '🌱'
     ];
 
     public function showMap($map)
@@ -22,5 +23,4 @@ class Render
         }
         echo "\n";
     }
-
 }

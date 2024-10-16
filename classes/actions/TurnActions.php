@@ -13,7 +13,7 @@ class TurnActions
         //}
         foreach ($map->mapArr as $row) {
             foreach ($row as $cell) {
-                if ($cell instanceof Predator) {
+                if ($cell instanceof Predator || $cell instanceof Herbivore) {
                     $cell->make_move($map);
                 }
             }

@@ -45,6 +45,8 @@ class PathSearch
     {
         if ($start_node_class == 'Predator' && $node->content instanceof Herbivore) {
             return true;
+        } else if ($start_node_class == 'Herbivore' && $node->content instanceof Grass) {
+            return true;
         }
         return false;
     }
@@ -84,10 +86,7 @@ class PathSearch
                     if ($child == null) continue;
                     $node->child_nodes[] = $child;
                     if ($child->content instanceof Rock) {
-                        echo 'Rock';
-
                         $child->visited = true;
-
                     }
                 }
             }
