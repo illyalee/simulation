@@ -1,18 +1,17 @@
 <?php
+require_once "Entity.php";
 
-abstract class Creature
+abstract class Creature extends Entity
 {
-    public int $y;
-    public int $x;
+
     public string $name;
     public int $health;
     public int $power;
 
-    public function __construct($name, $health, $power, $y, $x)
+    public function __construct(int $y, int $x, $name, $health, $power)
     {
+        parent::__construct($y, $x);
         $this->name = $name;
-        $this->y = $y;
-        $this->x = $x;
         $this->health = $health;
         $this->power = $power;
     }

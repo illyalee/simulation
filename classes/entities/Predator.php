@@ -1,6 +1,6 @@
 <?php
 
-require_once "classes/creatures/Creature.php";
+require_once "classes/entities/Creature.php";
 require_once "classes/search/PathSearch.php";
 
 class Predator extends Creature
@@ -43,9 +43,10 @@ class Predator extends Creature
     public function attack($pray, Map $map): void
     {
         $pray->health = $pray->health - $this->power;
-        echo $pray->health;
+        echo "pray health: " . $pray->health;
         if ($pray->health <= 0) {
             $map->mapArr[$pray->y][$pray->x] = null;
+            unset($pray);
         }
     }
 

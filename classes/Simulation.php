@@ -14,34 +14,21 @@ class Simulation
         $this->actions->initActions->setPiecesInMap($map, $animals);
     }
 
-    public function next_turn()
+    public function next_turn(): bool
     {
-        $wolf = $this->map->mapArr[0][0];
         $this->render->showMap($this->map->mapArr);
         sleep(1);
-        $wolf->make_move($this->map);
-        sleep(1);
-
-        $this->render->showMap($this->map->mapArr);
-        sleep(1);
-
-        $wolf->make_move($this->map);
-        $this->render->showMap($this->map->mapArr);
-        $wolf->make_move($this->map);
-        $this->render->showMap($this->map->mapArr);
-        $wolf->make_move($this->map);
-        $this->render->showMap($this->map->mapArr);
-        $wolf->make_move($this->map);
-        $this->render->showMap($this->map->mapArr);
-        $wolf->make_move($this->map);
-//        $this->actions->turnActions->moveAllCreatures($this->map);
-//        $this->render->showMap($this->map->mapArr);
+        return $this->actions->turnActions->moveAllCreatures($this->map);
 //        $this->actions->turnActions->moveAllCreatures($this->map);
 //        $this->render->showMap($this->map->mapArr);
     }
 
     public function start_simulation()
     {
-        $this->next_turn();
+        $continue = true;
+        while ($continue) {
+            $continue = $this->next_turn();
+        }
+        $this->render->showMap($this->map->mapArr);
     }
 }

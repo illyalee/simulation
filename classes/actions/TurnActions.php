@@ -4,16 +4,32 @@ class TurnActions
 {
 
 
-    public function moveAllCreatures(Map $map): void
+    public function moveAllCreatures(Map $map): bool
     {
-        //мы работает с копией карты
-//        for ($i = 0; $i < count($map->mapArr); $i++) {
-//            for ($j = 0; $j < count($map->mapArr[$i]); $j++) {
-//                $cell = $map->mapArr[$i][$j];
-//                if ($cell instanceof Creature) {
-//                    $cell->make_move($map, $this->pathSearch);
-//                }
-//            }
-//        }
+        //foreach($arr as $k => $v) {
+        //    if(key($v) > 5) {
+        //        unset($arr[$k]);
+        //    }
+        //}
+        foreach ($map->mapArr as $row) {
+            foreach ($row as $cell) {
+                if ($cell instanceof Predator) {
+                    $cell->make_move($map);
+                }
+            }
+        }
+        return $this->isHerbivoresAlive($map);
+    }
+
+    private function isHerbivoresAlive(Map $map): bool
+    {
+        foreach ($map->mapArr as $row) {
+            foreach ($row as $cell) {
+                if ($cell instanceof Herbivore) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

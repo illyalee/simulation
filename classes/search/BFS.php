@@ -2,6 +2,7 @@
 
 class BFS
 {
+    //это для памяти как было в начале)
     public function start_search($map, $start_node_y, $start_node_x, $type)
     {
         $newMap = $this->prepareCopyMap($map);
@@ -11,7 +12,11 @@ class BFS
         while (count($queue) !== 0) {
             $node = array_shift($queue);
             if ($node['item'] instanceof Herbivore) {
-                if ($numberOfIteration == 1) {return ["y" => $node["coords"]['y'], "x" => $node['coords']['x']];} else {return $node['parent_coords'];};
+                if ($numberOfIteration == 1) {
+                    return ["y" => $node["coords"]['y'], "x" => $node['coords']['x']];
+                } else {
+                    return $node['parent_coords'];
+                };
             }
             // if ($node['item'] instanceof Predator) {
             //     if ($numberOfIteration == 1) {return ["y" => $node["coords"]['y'], "x" => $node['coords']['x']];} else {return $node['parent_coords'];};
@@ -37,6 +42,7 @@ class BFS
         }
         return false;
     }
+
     public function prepareCopyMap($map)
     {
         $newMap = [];
@@ -64,6 +70,7 @@ class BFS
         }
         return $newMap;
     }
+
     public function getChildsFromNode($newMap, $node)
     {
         $newMapSizeY = count($newMap) - 1;

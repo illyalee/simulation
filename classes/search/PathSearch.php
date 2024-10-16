@@ -20,11 +20,14 @@ class PathSearch
             }
             foreach ($node->child_nodes as $child) {
                 if (!$child->visited) {
+                    echo 'child   ';
                     $child->visited = true;
                     $child->come_from = $node;
                     $queue->push($child);
                 }
             }
+            die;
+
         }
     }
 
@@ -82,6 +85,12 @@ class PathSearch
                 foreach ([$leftSideChild, $rightSideChild, $upSideChild, $downSideChild] as $child) {
                     if ($child == null) continue;
                     $node->child_nodes[] = $child;
+                    if ($child->content instanceof Rock) {
+                        echo 'Rock';
+
+                        $child->visited = true;
+
+                    }
                 }
             }
         }
