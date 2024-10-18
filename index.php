@@ -13,6 +13,8 @@ $render = new Render();
 $rabbit = new Herbivore(7, 0, "rabbit", 5, 1);
 $rabbit2 = new Herbivore(7, 8, "rabbit", 5, 1);
 $wolf = new Predator(9, 8, 'wolf', 10, 6);
+$wolf2 = new Predator(2, 4, 'wolf', 10, 6);
+
 $rock1 = new Rock(8, 6);
 $rock2 = new Rock(8, 7);
 $rock3 = new Rock(8, 8);

@@ -17,8 +17,7 @@ class Simulation
     public function next_turn(): bool
     {
         $this->render->showMap($this->map->mapArr);
-        sleep(1);
-        return $this->actions->turnActions->moveAllCreatures($this->map);
+        return $this->actions->turnActions->moveAllCreatures($this->map, $this->render);
 //        $this->actions->turnActions->moveAllCreatures($this->map);
 //        $this->render->showMap($this->map->mapArr);
     }

@@ -7,7 +7,7 @@ class PathSearch
     public function search($start_coords, Map $map)
     {
         $queue = new Queue();
-        $nodes = $this->initNodes($map);
+        $nodes = $this->initNodes($map, $start_coords);
         $start_node = $nodes[$start_coords[0]][$start_coords[1]];
         $start_node->visited = true;
         $start_node->come_from = 'start_node';
@@ -51,14 +51,14 @@ class PathSearch
         return false;
     }
 
-    private function initNodes(Map $map): array
+    private function initNodes(Map $map, $start_coords): array
     {
         $nodesArr = [];
         for ($i = 0; $i < count($map->mapArr); $i++) {
             $row = [];
             for ($j = 0; $j < count($map->mapArr[$i]); $j++) {
                 $cell = $map->mapArr[$i][$j];
-                if ($cell instanceof Creature) {
+                if ($cell instanceof Entity) {
                     $node = new Node($i, $j, $cell);
                     $row[] = $node;
                     continue;
@@ -67,11 +67,11 @@ class PathSearch
             }
             $nodesArr[] = $row;
         }
-        $this->addChildNodes($nodesArr);
+        $this->addChildNodes($nodesArr, $start_coords);
         return $nodesArr;
     }
 
-    private function addChildNodes($nodesArr): void
+    private function addChildNodes($nodesArr, $start_coords): void
     {
         $mapWidth = count($nodesArr[0]);
         $mapHeight = count($nodesArr);
@@ -83,9 +83,20 @@ class PathSearch
                 $upSideChild = ($y - 1) >= 0 ? $nodesArr[$y - 1][$x] : null;
                 $downSideChild = ($y + 1) < $mapWidth ? $nodesArr[$y + 1][$x] : null;
                 foreach ([$leftSideChild, $rightSideChild, $upSideChild, $downSideChild] as $child) {
+                    //$child == null, то есть за пределами карты
                     if ($child == null) continue;
                     $node->child_nodes[] = $child;
                     if ($child->content instanceof Rock) {
+                        $child->visited = true;
+                    }
+                    if ($child->content instanceof Grass && $node->content instanceof Predator && $node->y == $start_coords[0] && $node->x == $start_coords[1]) {
+                        $child->visited = true;
+                    }
+                    //set visited to nodes where our class equals to child node class, using coords to start our position
+                    if ($child->content instanceof Herbivore && $node->content instanceof Herbivore && $node->y == $start_coords[0] && $node->x == $start_coords[1]) {
+                        $child->visited = true;
+                    }
+                    if ($child->content instanceof Predator && $node->content instanceof Predator && $node->y == $start_coords[0] && $node->x == $start_coords[1]) {
                         $child->visited = true;
                     }
                 }
