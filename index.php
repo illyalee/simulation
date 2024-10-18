@@ -23,6 +23,6 @@ $init_actions = new InitActions();
 $turn_actions = new TurnActions();
 $actions = new Actions($init_actions, $turn_actions);
 $map = new Map();
-$simulation = new Simulation($map, $render, $actions, [$rabbit, $wolf, $rabbit2, $rock1, $rock2, $rock3, $grass]);
+$simulation = new Simulation($map, $render, $actions, [$rabbit, $wolf, $rabbit2, $rock1, $rock2, $rock3, $grass, $wolf2]);
 
 $simulation->start_simulation();
