@@ -20,21 +20,29 @@ class Map
         ];
     }
 
-    public function getObject($y, $x)
+    public function getCreaturesCoords(): array
+    {
+        $creatureCoords = [];
+        foreach ($this->mapArr as $row) {
+            foreach ($row as $cell) {
+                if ($cell instanceof Creature) {
+                    $creatureCoords[] = ['y' => $cell->getY(), 'x' => $cell->getX()];
+                }
+            }
+        }
+        return $creatureCoords;
+    }
+
+    public function getCreature($y, $x): Creature|null
     {
         return $this->mapArr[$y][$x];
     }
 
     public function move_object($startY, $startX, $endY, $endX)
     {
-
         $obj = $this->mapArr[$startY][$startX];
         $obj->y = $endY;
         $obj->x = $endX;
-//        if ($obj instanceof Herbivore && $this->mapArr[$endY][$endX] instanceof Herbivore) {
-//            echo 'MY BROTHER kill me(';
-//            die;
-//        }
         $this->mapArr[$endY][$endX] = $obj;
         $this->mapArr[$startY][$startX] = null;
     }

@@ -10,4 +10,14 @@ abstract class Entity
         $this->y = $y;
         $this->x = $x;
     }
+
+    public function getY()
+    {
+        return $this->y;
+    }
+
+    public function getX()
+    {
+        return $this->x;
+    }
 }
