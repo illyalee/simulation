@@ -20,6 +20,11 @@ class Map
         ];
     }
 
+    public function getObject($y, $x)
+    {
+        return $this->mapArr[$y][$x];
+    }
+
     public function move_object($startY, $startX, $endY, $endX)
     {
 

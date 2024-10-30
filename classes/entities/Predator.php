@@ -5,6 +5,14 @@ require_once "classes/search/PathSearch.php";
 
 class Predator extends Creature
 {
+    public int $power;
+
+    public function __construct(int $y, int $x, $name, $health, $power)
+    {
+        parent::__construct($y, $x, $name, $health);
+        $this->power = $power;
+    }
+
     public function make_move(Map $map): bool
     {
 

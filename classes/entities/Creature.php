@@ -6,14 +6,12 @@ abstract class Creature extends Entity
 
     public string $name;
     public int $health;
-    public int $power;
 
-    public function __construct(int $y, int $x, $name, $health, $power)
+    public function __construct(int $y, int $x, $name, $health)
     {
         parent::__construct($y, $x);
         $this->name = $name;
         $this->health = $health;
-        $this->power = $power;
     }
 
     public function getCreatureAround($y, $x, Map $map)

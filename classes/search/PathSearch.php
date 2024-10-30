@@ -6,13 +6,13 @@ class PathSearch
 {
     public function search($start_coords, Map $map)
     {
+        $start_node_class = get_class($map->mapArr[$start_coords[0]][$start_coords[1]]);
         $queue = new Queue();
-        $nodes = $this->initNodes($map, $start_coords);
+        $nodes = $this->initNodes($map, $start_node_class);
         $start_node = $nodes[$start_coords[0]][$start_coords[1]];
         $start_node->visited = true;
         $start_node->come_from = 'start_node';
         $queue->push($start_node);
-        $start_node_class = get_class($nodes[$start_coords[0]][$start_coords[1]]->content);
         while (!$queue->isEmpty()) {
             $node = $queue->pop();
             if ($this->isGoalNode($node, $start_node_class)) {
@@ -51,7 +51,7 @@ class PathSearch
         return false;
     }
 
-    private function initNodes(Map $map, $start_coords): array
+    private function initNodes(Map $map, $start_node_class): array
     {
         $nodesArr = [];
         for ($i = 0; $i < count($map->mapArr); $i++) {
@@ -67,37 +67,33 @@ class PathSearch
             }
             $nodesArr[] = $row;
         }
-        $this->addChildNodes($nodesArr, $start_coords);
+        $this->addChildNodes($nodesArr, $start_node_class);
         return $nodesArr;
     }
 
-    private function addChildNodes($nodesArr, $start_coords): void
+    private function addChildNodes($nodesArr, $start_node_class): void
     {
         $mapWidth = count($nodesArr[0]);
         $mapHeight = count($nodesArr);
         for ($y = 0; $y < $mapHeight; $y++) {
             for ($x = 0; $x < $mapWidth; $x++) {
-                $node = $nodesArr[$y][$x];
+                $currentNode = $nodesArr[$y][$x];
                 $leftSideChild = ($x - 1) >= 0 ? $nodesArr[$y][$x - 1] : null;
                 $rightSideChild = ($x + 1) < $mapWidth ? $nodesArr[$y][$x + 1] : null;
                 $upSideChild = ($y - 1) >= 0 ? $nodesArr[$y - 1][$x] : null;
                 $downSideChild = ($y + 1) < $mapWidth ? $nodesArr[$y + 1][$x] : null;
-                foreach ([$leftSideChild, $rightSideChild, $upSideChild, $downSideChild] as $child) {
-                    //$child == null, то есть за пределами карты
-                    if ($child == null) continue;
-                    $node->child_nodes[] = $child;
-                    if ($child->content instanceof Rock) {
-                        $child->visited = true;
+                foreach ([$leftSideChild, $rightSideChild, $upSideChild, $downSideChild] as $childNode) {
+                    //$childNode == null, то есть за пределами карты
+                    if ($childNode == null) continue;
+                    $currentNode->child_nodes[] = $childNode;
+                    if ($childNode->content instanceof Rock) {
+                        $childNode->visited = true;
                     }
-                    if ($child->content instanceof Grass && $node->content instanceof Predator && $node->y == $start_coords[0] && $node->x == $start_coords[1]) {
-                        $child->visited = true;
+                    if (($childNode->content instanceof Grass || $childNode->content instanceof Predator) && $start_node_class == "Predator") {
+                        $childNode->visited = true;
                     }
-                    //set visited to nodes where our class equals to child node class, using coords to start our position
-                    if ($child->content instanceof Herbivore && $node->content instanceof Herbivore && $node->y == $start_coords[0] && $node->x == $start_coords[1]) {
-                        $child->visited = true;
-                    }
-                    if ($child->content instanceof Predator && $node->content instanceof Predator && $node->y == $start_coords[0] && $node->x == $start_coords[1]) {
-                        $child->visited = true;
+                    if (($childNode->content instanceof Herbivore || $childNode->content instanceof Predator) && $start_node_class == "Herbivore") {
+                        $childNode->visited = true;
                     }
                 }
             }
