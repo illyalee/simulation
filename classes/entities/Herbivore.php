@@ -19,7 +19,7 @@ class Herbivore extends Creature
     {
         $pathSearch = new PathSearch();
         $coords = $pathSearch->search([$this->y, $this->x], $map);
-        $map->move_object($this->y, $this->x, $coords[1]['y'], $coords[1]['x']);
+        $map->moveCreature($this->y, $this->x, $coords[1]['y'], $coords[1]['x']);
         return true;
     }
 

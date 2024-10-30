@@ -9,16 +9,11 @@ class TurnActions
         foreach ($creaturesCoords as $creatureCoords) {
             $creature = $map->getCreature($creatureCoords['y'], $creatureCoords['x']);
             $creature?->make_move($map);
-//            $render->showMap($map->mapArr);
-//            sleep(1);
+            $render->showMap($map->mapArr);
+            sleep(1);
         }
 
         return $this->isHerbivoresAlive($map);
-    }
-
-    private function isCreatureAlive($cell, $map): null|Creature
-    {
-        return $map->getObject($cell->y, $cell->x);
     }
 
     private function isHerbivoresAlive(Map $map): bool

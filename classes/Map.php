@@ -38,12 +38,13 @@ class Map
         return $this->mapArr[$y][$x];
     }
 
-    public function move_object($startY, $startX, $endY, $endX)
+    public function moveCreature($startY, $startX, $endY, $endX)
     {
         $obj = $this->mapArr[$startY][$startX];
         $obj->y = $endY;
         $obj->x = $endX;
         $this->mapArr[$endY][$endX] = $obj;
         $this->mapArr[$startY][$startX] = null;
+        return true;
     }
 }

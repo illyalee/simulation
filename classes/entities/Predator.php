@@ -22,6 +22,11 @@ class Predator extends Creature
             return true;
         }
         $this->changePosition($map);
+        $prey = $this->getCreatureAround($this->y, $this->x, $map);
+        if ($prey) {
+            $this->attack($prey, $map);
+            return true;
+        }
         return true;
     }
 
@@ -30,7 +35,7 @@ class Predator extends Creature
         $pathSearch = new PathSearch();
         $coords = $pathSearch->search([$this->y, $this->x], $map);
         if ($coords) {
-            $map->move_object($this->y, $this->x, $coords[1]['y'], $coords[1]['x']);
+            $map->moveCreature($this->y, $this->x, $coords[1]['y'], $coords[1]['x']);
         }
         return true;
     }
