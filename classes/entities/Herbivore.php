@@ -9,7 +9,7 @@ class Herbivore extends Creature
         if ($this->tryToAttack($map, $coordinates)) {
             return true;
         }
-        $this->changeCreaturePosition($map);
+        $this->changePosition($map);
         return $this->tryToAttack($map, $coordinates);
     }
 
@@ -39,22 +39,17 @@ class Herbivore extends Creature
     private function attack($pray, Map $map): void
     {
         if ($pray) {
-            $this->health += 3;
-            $map->mapArr[$pray->y][$pray->x] = null;
+            $this->setHealth($this->getHealth() + 3);
+            $map->unsetEntity($pray->y, $pray->x);
         }
     }
 
-    private function changeCreaturePosition(Map $map): void
+    private function changePosition(Map $map): void
     {
         $pathSearch = new PathSearch();
         $coords = $pathSearch->findPath([$this->y, $this->x], $map);
         if ($coords) {
-            $map->moveCreature($this->y, $this->x, $coords[1]['y'], $coords[1]['x']);
+            $map->changeCreaturePosition($this->y, $this->x, $coords[1]['y'], $coords[1]['x']);
         }
-    }
-
-    public function getName()
-    {
-        return $this->name;
     }
 }

@@ -3,7 +3,6 @@ require_once "Entity.php";
 
 abstract class Creature extends Entity
 {
-
     public string $name;
     public int $health;
 
@@ -29,6 +28,12 @@ abstract class Creature extends Entity
     private function attack($pray, Map $map)
     {
 
+    }
+
+    public function updateCoords($newY, $newX)
+    {
+        $this->y = $newY;
+        $this->x = $newX;
     }
 
     public function getName()

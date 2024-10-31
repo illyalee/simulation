@@ -5,7 +5,6 @@ class TurnActions
     public function moveAllCreatures(Map $map, Coordinates $coordinates, $render): bool
     {
         $creaturesCoords = $coordinates->getAllCreaturesCoords($map);
-
         foreach ($creaturesCoords as $creatureCoords) {
             $entity = $map->getEntity($creatureCoords['y'], $creatureCoords['x']);
             if ($entity instanceof Creature) {
@@ -14,7 +13,6 @@ class TurnActions
                 sleep(1);
             }
         }
-
         return $this->isHerbivoresAlive($map);
     }
 

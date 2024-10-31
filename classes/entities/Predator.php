@@ -18,7 +18,7 @@ class Predator extends Creature
         if ($this->tryToAttack($map, $coordinates)) {
             return true;
         }
-        $this->changeCreaturePosition($map);
+        $this->changePosition($map);
         return $this->tryToAttack($map, $coordinates);
     }
 
@@ -44,12 +44,12 @@ class Predator extends Creature
         return null;
     }
 
-    private function changeCreaturePosition(Map $map): void
+    private function changePosition(Map $map): void
     {
         $pathSearch = new PathSearch();
         $coords = $pathSearch->findPath([$this->y, $this->x], $map);
         if ($coords) {
-            $map->moveCreature($this->y, $this->x, $coords[1]['y'], $coords[1]['x']);
+            $map->changeCreaturePosition($this->y, $this->x, $coords[1]['y'], $coords[1]['x']);
         }
     }
 
@@ -57,12 +57,7 @@ class Predator extends Creature
     {
         $pray->setHealth($pray->getHealth() - $this->power);
         if ($pray->getHealth() <= 0) {
-            $map->mapArr[$pray->y][$pray->x] = null;
+            $map->unsetEntity($pray->y, $pray->x);
         }
-    }
-
-    public function getName()
-    {
-        return $this->name;
     }
 }

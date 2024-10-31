@@ -26,18 +26,22 @@ class Map
         return $this->mapArr[$y][$x];
     }
 
-    public function setEntity(Entity $entity, $pointX, $pointY): void
+    public function setEntity(Entity $entity, $pointY, $pointX): void
     {
+        $this->mapArr[$pointY][$pointX] = $entity;
     }
 
-    public function moveCreature($startY, $startX, $endY, $endX)
+    public function unsetEntity($pointY, $pointX): void
     {
-        $obj = $this->mapArr[$startY][$startX];
-        $obj->y = $endY;
-        $obj->x = $endX;
-        $this->mapArr[$endY][$endX] = $obj;
-        $this->mapArr[$startY][$startX] = null;
-        return true;
+        $this->mapArr[$pointY][$pointX] = null;
+    }
+
+    public function changeCreaturePosition($startY, $startX, $endY, $endX): void
+    {
+        $creature = $this->getEntity($startY, $startX);
+        $creature->updateCoords($endY, $endX);
+        $this->setEntity($creature, $endY, $endX);
+        $this->unsetEntity($startY, $startX);
     }
 
     public function getMap(): array
