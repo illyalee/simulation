@@ -2,13 +2,13 @@
 
 class TurnActions
 {
-    public function moveAllCreatures(Map $map, $render): bool
+    public function moveAllCreatures(Map $map, Coordinates $coordinates, $render): bool
     {
-        $creaturesCoords = $map->getCreaturesCoords();
+        $creaturesCoords = $coordinates->getAllCreaturesCoords($map);
 
         foreach ($creaturesCoords as $creatureCoords) {
-            $creature = $map->getCreature($creatureCoords['y'], $creatureCoords['x']);
-            $creature?->make_move($map);
+            $creature = $map->getEntity($creatureCoords['y'], $creatureCoords['x']);
+            $creature?->make_move($map, $coordinates);
             $render->showMap($map->mapArr);
             sleep(1);
         }

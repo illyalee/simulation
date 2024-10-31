@@ -14,17 +14,12 @@ abstract class Creature extends Entity
         $this->health = $health;
     }
 
-    public function getCreatureAround($y, $x, Map $map)
+    private function attack($pray, Map $map)
     {
 
     }
 
-    public function attack($pray, Map $map)
-    {
-
-    }
-
-    abstract public function make_move(Map $map);
+    abstract public function make_move(Map $map, Coordinates $coordinates);
 
     public function getName()
     {

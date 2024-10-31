@@ -13,24 +13,38 @@ class Predator extends Creature
         $this->power = $power;
     }
 
-    public function make_move(Map $map): bool
+    public function make_move(Map $map, $coordinates): bool
     {
-
-        $prey = $this->getCreatureAround($this->y, $this->x, $map);
-        if ($prey) {
-            $this->attack($prey, $map);
+        if ($this->tryToAttack($map, $coordinates)) {
             return true;
         }
         $this->changePosition($map);
-        $prey = $this->getCreatureAround($this->y, $this->x, $map);
+        return $this->tryToAttack($map, $coordinates);
+    }
+
+    private function tryToAttack(Map $map, $coordinates): bool
+    {
+        $prey = $this->searchFoodAround($this->y, $this->x, $map, $coordinates);
         if ($prey) {
             $this->attack($prey, $map);
             return true;
         }
-        return true;
+        return false;
     }
 
-    public function changePosition(Map $map): bool
+    private function searchFoodAround($pointY, $pointX, Map $map, Coordinates $coordinates): Herbivore|null
+    {
+        $coordsInRange = $coordinates->getCoordsInRangeByPoint(1, $pointY, $pointX, $map, $coordinates);
+        foreach ($coordsInRange as [$y, $x]) {
+            $entity = $map->getEntity($y, $x);
+            if ($entity instanceof Herbivore) {
+                return $entity;
+            }
+        }
+        return null;
+    }
+
+    private function changePosition(Map $map): bool
     {
         $pathSearch = new PathSearch();
         $coords = $pathSearch->search([$this->y, $this->x], $map);
@@ -40,24 +54,10 @@ class Predator extends Creature
         return true;
     }
 
-    public function getCreatureAround($y, $x, Map $map)
+    private function attack($pray, Map $map): void
     {
-//      $attackRange = 1;
-        $leftSideObjects = ($x - 1) >= 0 ? $map->mapArr[$y][$x - 1] : null;
-        $rightSideObjects = ($x + 1) < count($map->mapArr[0]) ? $map->mapArr[$y][$x + 1] : null;
-        $upSideObjects = ($y - 1) >= 0 ? $map->mapArr[$y - 1][$x] : null;
-        $downSideObjects = ($y + 1) < count($map->mapArr) ? $map->mapArr[$y + 1][$x] : null;
-
-        $entities = array($upSideObjects, $downSideObjects, $leftSideObjects, $rightSideObjects);
-        foreach ($entities as $entity) {
-            if ($entity == null || $entity instanceof Predator || $entity instanceof Rock || $entity instanceof Grass) continue;
-            return $entity;
-        }
-        return null;
-    }
-
-    public function attack($pray, Map $map): void
-    {
+        //выборать кого атаковать если есть коорды
+        //сама атака, продумать логику взаимодействий
         $pray->health = $pray->health - $this->power;
         echo "pray health: " . $pray->health;
         if ($pray->health <= 0) {

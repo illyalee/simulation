@@ -9,6 +9,7 @@ require_once "classes/actions/TurnActions.php";
 require_once 'classes/entities/Predator.php';
 require_once "classes/entities/Rock.php";
 require_once "classes/entities/Grass.php";
+require_once "classes/entities/coordinates.php";
 $render = new Render();
 $rabbit = new Herbivore(7, 0, "rabbit", 5, 1);
 $rabbit2 = new Herbivore(7, 8, "rabbit", 5, 1);
@@ -23,6 +24,7 @@ $init_actions = new InitActions();
 $turn_actions = new TurnActions();
 $actions = new Actions($init_actions, $turn_actions);
 $map = new Map();
-$simulation = new Simulation($map, $render, $actions, [$rabbit, $wolf, $rabbit2, $rock1, $rock2, $rock3, $grass, $wolf2]);
+$coordinates = new Coordinates(count($map->getMap()));
+$simulation = new Simulation($map, $render, $actions, $coordinates, [$rabbit, $wolf, $rabbit2, $rock1, $rock2, $rock3, $grass, $wolf2]);
 
 $simulation->start_simulation();

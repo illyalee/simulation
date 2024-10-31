@@ -20,20 +20,8 @@ class Map
         ];
     }
 
-    public function getCreaturesCoords(): array
-    {
-        $creatureCoords = [];
-        foreach ($this->mapArr as $row) {
-            foreach ($row as $cell) {
-                if ($cell instanceof Creature) {
-                    $creatureCoords[] = ['y' => $cell->getY(), 'x' => $cell->getX()];
-                }
-            }
-        }
-        return $creatureCoords;
-    }
 
-    public function getCreature($y, $x): Creature|null
+    public function getEntity($y, $x): Entity|null
     {
         return $this->mapArr[$y][$x];
     }
@@ -46,5 +34,10 @@ class Map
         $this->mapArr[$endY][$endX] = $obj;
         $this->mapArr[$startY][$startX] = null;
         return true;
+    }
+
+    public function getMap(): array
+    {
+        return $this->mapArr;
     }
 }
