@@ -4,12 +4,12 @@ require_once "Creature.php";
 class Herbivore extends Creature
 {
 
-    public function make_move(Map $map, $coordinates): bool
+    public function makeMove(Map $map, $coordinates): bool
     {
         if ($this->tryToAttack($map, $coordinates)) {
             return true;
         }
-        $this->changePosition($map);
+        $this->changeCreaturePosition($map);
         return $this->tryToAttack($map, $coordinates);
     }
 
@@ -36,23 +36,21 @@ class Herbivore extends Creature
     }
 
 
-    public function attack($pray, Map $map): void
+    private function attack($pray, Map $map): void
     {
         if ($pray) {
             $this->health += 3;
             $map->mapArr[$pray->y][$pray->x] = null;
-            unset($pray);
         }
     }
 
-    private function changePosition(Map $map): bool
+    private function changeCreaturePosition(Map $map): void
     {
         $pathSearch = new PathSearch();
-        $coords = $pathSearch->search([$this->y, $this->x], $map);
+        $coords = $pathSearch->findPath([$this->y, $this->x], $map);
         if ($coords) {
             $map->moveCreature($this->y, $this->x, $coords[1]['y'], $coords[1]['x']);
         }
-        return true;
     }
 
     public function getName()

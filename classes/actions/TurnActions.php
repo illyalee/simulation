@@ -7,10 +7,12 @@ class TurnActions
         $creaturesCoords = $coordinates->getAllCreaturesCoords($map);
 
         foreach ($creaturesCoords as $creatureCoords) {
-            $creature = $map->getEntity($creatureCoords['y'], $creatureCoords['x']);
-            $creature?->make_move($map, $coordinates);
-            $render->showMap($map->mapArr);
-            sleep(1);
+            $entity = $map->getEntity($creatureCoords['y'], $creatureCoords['x']);
+            if ($entity instanceof Creature) {
+                $entity?->makeMove($map, $coordinates);
+                $render->showMap($map->mapArr);
+                sleep(1);
+            }
         }
 
         return $this->isHerbivoresAlive($map);

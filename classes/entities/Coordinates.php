@@ -23,7 +23,7 @@ class Coordinates
     }
 
 
-    public function getCoordsInRangeByPoint(int $range, $y, $x): array
+    public function getCoordsInRangeByPoint(int $range = 1, $y, $x): array
     {
         $coordsInRange = [];
         $offsets = [

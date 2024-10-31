@@ -13,12 +13,12 @@ class Predator extends Creature
         $this->power = $power;
     }
 
-    public function make_move(Map $map, $coordinates): bool
+    public function makeMove(Map $map, $coordinates): bool
     {
         if ($this->tryToAttack($map, $coordinates)) {
             return true;
         }
-        $this->changePosition($map);
+        $this->changeCreaturePosition($map);
         return $this->tryToAttack($map, $coordinates);
     }
 
@@ -44,25 +44,20 @@ class Predator extends Creature
         return null;
     }
 
-    private function changePosition(Map $map): bool
+    private function changeCreaturePosition(Map $map): void
     {
         $pathSearch = new PathSearch();
-        $coords = $pathSearch->search([$this->y, $this->x], $map);
+        $coords = $pathSearch->findPath([$this->y, $this->x], $map);
         if ($coords) {
             $map->moveCreature($this->y, $this->x, $coords[1]['y'], $coords[1]['x']);
         }
-        return true;
     }
 
-    private function attack($pray, Map $map): void
+    private function attack(Herbivore $pray, Map $map): void
     {
-        //выборать кого атаковать если есть коорды
-        //сама атака, продумать логику взаимодействий
-        $pray->health = $pray->health - $this->power;
-        echo "pray health: " . $pray->health;
-        if ($pray->health <= 0) {
+        $pray->setHealth($pray->getHealth() - $this->power);
+        if ($pray->getHealth() <= 0) {
             $map->mapArr[$pray->y][$pray->x] = null;
-            unset($pray);
         }
     }
 

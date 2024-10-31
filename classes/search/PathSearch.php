@@ -4,7 +4,7 @@ require_once 'Queue.php';
 
 class PathSearch
 {
-    public function search($start_coords, Map $map)
+    public function findPath($start_coords, Map $map)
     {
         $start_node_class = get_class($map->mapArr[$start_coords[0]][$start_coords[1]]);
         $queue = new Queue();
