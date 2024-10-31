@@ -26,6 +26,10 @@ class Map
         return $this->mapArr[$y][$x];
     }
 
+    public function setEntity(Entity $entity, $pointX, $pointY): void
+    {
+    }
+
     public function moveCreature($startY, $startX, $endY, $endX)
     {
         $obj = $this->mapArr[$startY][$startX];
