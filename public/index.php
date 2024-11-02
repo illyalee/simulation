@@ -1,6 +1,5 @@
 <?php
 
-//clear terminal
 system('clear');
 
 use Src\World\{Simulation, Map, Render, Coordinates};
