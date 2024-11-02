@@ -13,13 +13,11 @@ class PathSearch
 {
     public function findPath($start_coords, Map $map)
     {
-        echo "in Patch Search";
         $start_node_class = str_replace(
             'Src\\Entities\\',
             "",
             get_class($map->mapArr[$start_coords[0]][$start_coords[1]])
         );
-        var_dump($start_node_class);
         $queue = new Queue();
         $nodes = $this->initNodes($map, $start_node_class);
         $start_node = $nodes[$start_coords[0]][$start_coords[1]];

@@ -1,23 +1,14 @@
 <?php
 
+//clear terminal
+system('clear');
+
 use Src\World\{Simulation, Map, Render, Coordinates};
 use Src\Actions\{Actions, InitActions, TurnActions};
 use Src\Entities\{Predator, Herbivore, Rock, Grass};
 
-require_once "../src/world/Simulation.php";
-require_once "../src/world/Render.php";
-require_once "../src/world/Map.php";
-require_once "../src/entities/Herbivore.php";
-require_once "../src/actions/Actions.php";
-require_once "../src/actions/InitActions.php";
-require_once "../src/actions/TurnActions.php";
-require_once '../src/entities/Predator.php';
-require_once "../src/entities/Rock.php";
-require_once "../src/entities/Grass.php";
-require_once "../src/world/coordinates.php";
-//spl_autoload_register(function ($class) {
-//    require "../src/world/Simulation.php";
-//});
+require __DIR__ . '/../src/autoload/autoload.php';
+
 $render = new Render();
 $rabbit = new Herbivore(7, 0, "rabbit", 5, 1);
 $rabbit2 = new Herbivore(7, 8, "rabbit", 5, 1);
