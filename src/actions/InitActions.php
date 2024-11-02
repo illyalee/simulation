@@ -1,6 +1,11 @@
 <?php
 
+namespace Src\Actions;
+
+use src\world\Map;
+
 class InitActions
+
 {
     function setPiecesInMap(Map $map, array $pieces)
     {

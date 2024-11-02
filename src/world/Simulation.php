@@ -1,5 +1,9 @@
 <?php
 
+namespace Src\World;
+
+use Src\Actions\Actions;
+
 class Simulation
 {
     public Map $map;
@@ -20,15 +24,18 @@ class Simulation
     {
         $this->render->showMap($this->map->mapArr);
         return $this->actions->turnActions->moveAllCreatures($this->map, $this->coordinates, $this->render);
-//        $this->actions->turnActions->moveAllCreatures($this->map);
-//        $this->render->showMap($this->map->mapArr);
     }
 
-    public function start_simulation()
+    public function start_simulation(): void
     {
         $continue = true;
+        $counter = 0;
         while ($continue) {
             $continue = $this->next_turn();
+//            $counter++;
+//            if ($counter > 5) {
+//            $continue = false;
+//            }
         }
         $this->render->showMap($this->map->mapArr);
     }

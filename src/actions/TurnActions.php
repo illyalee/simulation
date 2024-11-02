@@ -1,8 +1,13 @@
 <?php
 
+namespace Src\Actions;
+
+use Src\World\{Map, Coordinates, Render};
+use src\Entities\{Creature, Herbivore, Predator};
+
 class TurnActions
 {
-    public function moveAllCreatures(Map $map, Coordinates $coordinates, $render): bool
+    public function moveAllCreatures(Map $map, Coordinates $coordinates, Render $render): bool
     {
         $creaturesCoords = $coordinates->getAllCreaturesCoords($map);
         foreach ($creaturesCoords as $creatureCoords) {

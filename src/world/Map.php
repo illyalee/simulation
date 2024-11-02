@@ -1,5 +1,9 @@
 <?php
 
+namespace Src\World;
+
+use Src\Entities\Entity;
+
 class Map
 {
     public array $mapArr;
@@ -38,6 +42,7 @@ class Map
 
     public function changeCreaturePosition($startY, $startX, $endY, $endX): void
     {
+        echo "try to change position in Map";
         $creature = $this->getEntity($startY, $startX);
         $creature->updateCoords($endY, $endX);
         $this->setEntity($creature, $endY, $endX);

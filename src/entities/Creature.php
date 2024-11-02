@@ -1,4 +1,9 @@
 <?php
+
+namespace Src\Entities;
+
+use Src\World\{Map, Coordinates};
+
 require_once "Entity.php";
 
 abstract class Creature extends Entity
@@ -27,7 +32,6 @@ abstract class Creature extends Entity
 
     private function attack($pray, Map $map)
     {
-
     }
 
     public function updateCoords($newY, $newX)
@@ -38,5 +42,6 @@ abstract class Creature extends Entity
 
     public function getName()
     {
+        return $this->name;
     }
 }

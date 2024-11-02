@@ -1,5 +1,7 @@
 <?php
 
+namespace Src\Search;
+
 class Queue
 {
     private array $queue = [];

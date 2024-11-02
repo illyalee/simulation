@@ -1,5 +1,7 @@
 <?php
 
+namespace Src\Entities;
+
 abstract class Entity
 {
     public int $y;

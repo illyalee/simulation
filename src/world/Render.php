@@ -1,12 +1,16 @@
 <?php
 
+namespace Src\World;
+
+use Src\Entities\Entity;
+
 class Render
 {
-    public $animal_icons = [
-        "herbivore" => "🐇",
-        "predator" => '🐺',
-        "rock" => '🪨',
-        "grass" => '🌱'
+    public array $animal_icons = [
+        'src\entities\herbivore' => "🐇",
+        'src\entities\predator' => '🐺',
+        'src\entities\rock' => '🪨',
+        'src\entities\grass' => '🌱'
     ];
 
     public function showMap($map)

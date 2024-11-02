@@ -1,5 +1,9 @@
 <?php
 
+namespace Src\World;
+
+use Src\Entities\Creature;
+
 class Coordinates
 {
     private readonly int $BORDER_OFFSET;

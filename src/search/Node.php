@@ -1,5 +1,7 @@
 <?php
 
+namespace Src\Search;
+
 class Node
 {
     public object|null $content;

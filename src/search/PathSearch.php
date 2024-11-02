@@ -1,4 +1,11 @@
 <?php
+
+namespace Src\Search;
+
+use Src\World\{Map, Coordinates};
+use Src\Search\{Node, Queue};
+use Src\Entities\{Creature, Entity, Predator, Grass, Rock, Herbivore};
+
 require_once 'Node.php';
 require_once 'Queue.php';
 
@@ -6,7 +13,13 @@ class PathSearch
 {
     public function findPath($start_coords, Map $map)
     {
-        $start_node_class = get_class($map->mapArr[$start_coords[0]][$start_coords[1]]);
+        echo "in Patch Search";
+        $start_node_class = str_replace(
+            'Src\\Entities\\',
+            "",
+            get_class($map->mapArr[$start_coords[0]][$start_coords[1]])
+        );
+        var_dump($start_node_class);
         $queue = new Queue();
         $nodes = $this->initNodes($map, $start_node_class);
         $start_node = $nodes[$start_coords[0]][$start_coords[1]];
@@ -25,7 +38,6 @@ class PathSearch
                     $queue->push($child);
                 }
             }
-
         }
     }
 
@@ -34,7 +46,6 @@ class PathSearch
         $coords = array();
         $coords[] = ['y' => $node->y, 'x' => $node->x];
         while ($node->come_from !== 'start_node') {
-
             $coords[] = ['y' => $node->come_from->y, 'x' => $node->come_from->x];
             $node = $node->come_from;
         }
@@ -45,8 +56,10 @@ class PathSearch
     {
         if ($start_node_class == 'Predator' && $node->content instanceof Herbivore) {
             return true;
-        } else if ($start_node_class == 'Herbivore' && $node->content instanceof Grass) {
-            return true;
+        } else {
+            if ($start_node_class == 'Herbivore' && $node->content instanceof Grass) {
+                return true;
+            }
         }
         return false;
     }
@@ -84,7 +97,9 @@ class PathSearch
                 $downSideChild = ($y + 1) < $mapWidth ? $nodesArr[$y + 1][$x] : null;
                 foreach ([$leftSideChild, $rightSideChild, $upSideChild, $downSideChild] as $childNode) {
                     //$childNode == null, то есть за пределами карты
-                    if ($childNode == null) continue;
+                    if ($childNode == null) {
+                        continue;
+                    }
                     $currentNode->child_nodes[] = $childNode;
                     if ($childNode->content instanceof Rock) {
                         $childNode->visited = true;
