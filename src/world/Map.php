@@ -6,24 +6,23 @@ use Src\Entities\Entity;
 
 class Map
 {
-    public array $mapArr;
+    public array $mapArr = [];
 
-    public function __construct()
+    public function __construct(int $columns = 10, int $rows = 10)
     {
-        $this->mapArr = [
-            [null, null, null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null, null, null]
-        ];
+        $this->createWorldMap($columns, $rows);
     }
 
+    private function createWorldMap(int $columns, int $rows): void
+    {
+        for ($i = 0; $i < $columns; $i++) {
+            $row = [];
+            for ($j = 0; $j < $rows; $j++) {
+                $row[] = null;
+            }
+            $this->mapArr[] = $row;
+        }
+    }
 
     public function getEntity($y, $x): Entity|null
     {

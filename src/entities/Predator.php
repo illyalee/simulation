@@ -12,13 +12,8 @@ require_once __DIR__ . "/../search/PathSearch.php";
 
 class Predator extends Creature
 {
-    public int $power;
-
-    public function __construct(int $y, int $x, $name, $health, $power)
-    {
-        parent::__construct($y, $x, $name, $health);
-        $this->power = $power;
-    }
+    public int $power = 3;
+    public int $health = 10;
 
     public function makeMove(Map $map, $coordinates): bool
     {
@@ -41,10 +36,11 @@ class Predator extends Creature
 
     private function searchFoodAround($pointY, $pointX, Map $map, Coordinates $coordinates): Herbivore|null
     {
-        $coordsInRange = $coordinates->getCoordsInRangeByPoint(1, $pointY, $pointX, $map, $coordinates);
+        $coordsInRange = $coordinates->getCoordsInRangeByPoint($pointY, $pointX, $map, $coordinates);
         foreach ($coordsInRange as [$y, $x]) {
             $entity = $map->getEntity($y, $x);
             if ($entity instanceof Herbivore) {
+                echo "Herbivore around, try to kill it...";
                 return $entity;
             }
         }
@@ -62,8 +58,14 @@ class Predator extends Creature
 
     private function attack(Herbivore $pray, Map $map): void
     {
+        echo $pray->getHealth();
+        echo "\n";
         $pray->setHealth($pray->getHealth() - $this->power);
+        echo $pray->getHealth();
+        echo "\n";
+
         if ($pray->getHealth() <= 0) {
+            echo "prey is dead;";
             $map->unsetEntity($pray->y, $pray->x);
         }
     }

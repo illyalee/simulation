@@ -14,8 +14,8 @@ class TurnActions
             $entity = $map->getEntity($creatureCoords['y'], $creatureCoords['x']);
             if ($entity instanceof Creature) {
                 $entity?->makeMove($map, $coordinates);
-                $render->showMap($map->mapArr);
-                sleep(1);
+//                $render->showMap($map->mapArr);
+//                sleep(1);
             }
         }
         return $this->isHerbivoresAlive($map);

@@ -7,9 +7,9 @@ class Actions
     public InitActions $initActions;
     public TurnActions $turnActions;
 
-    public function __construct($initActions, $turnActions)
+    public function __construct()
     {
-        $this->initActions = $initActions;
-        $this->turnActions = $turnActions;
+        $this->initActions = new InitActions();
+        $this->turnActions = new TurnActions();
     }
 }

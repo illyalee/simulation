@@ -3,6 +3,7 @@
 namespace Src\World;
 
 use Src\Entities\Creature;
+use Src\Entities\Entity;
 
 class Coordinates
 {
@@ -26,8 +27,22 @@ class Coordinates
         return $creatureCoords;
     }
 
+    public static function getFreeCellsCoords(Map $map): array
+    {
+        $mapArr = $map->getMap();
+        $coords = [];
+        for ($i = 0; $i < count($mapArr); $i++) {
+            for ($j = 0; $j < count($mapArr[$i]); $j++) {
+                $cell = $mapArr[$i][$j];
+                if (!$cell instanceof Entity) {
+                    $coords[] = ['y' => $i, 'x' => $j];
+                }
+            }
+        }
+        return $coords;
+    }
 
-    public function getCoordsInRangeByPoint(int $range = 1, $y, $x): array
+    public function getCoordsInRangeByPoint($y, $x): array
     {
         $coordsInRange = [];
         $offsets = [

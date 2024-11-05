@@ -11,6 +11,7 @@ require_once __DIR__ . "/../search/PathSearch.php";
 
 class Herbivore extends Creature
 {
+    public int $health = 10;
 
     public function makeMove(Map $map, $coordinates): bool
     {
@@ -33,7 +34,7 @@ class Herbivore extends Creature
 
     private function searchFoodAround($pointY, $pointX, Map $map, Coordinates $coordinates): Grass|null
     {
-        $coordsInRange = $coordinates->getCoordsInRangeByPoint(1, $pointY, $pointX, $map, $coordinates);
+        $coordsInRange = $coordinates->getCoordsInRangeByPoint($pointY, $pointX, $map, $coordinates);
         foreach ($coordsInRange as [$y, $x]) {
             $entity = $map->getEntity($y, $x);
             if ($entity instanceof Grass) {
