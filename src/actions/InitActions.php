@@ -8,18 +8,28 @@ use Src\Entities\{Predator, Herbivore, Rock, Grass, EntitiesFactory};
 
 class InitActions
 {
-    public function initCreatures(Map $map, int $predatorsQty, int $herbivoresQty): bool
+    public function initCreatures(Map $map, int $predatorsQty, int $herbivoresQty): void
     {
-        $werePredatorsSpawn = $this->spawnEntitiesOnTheMap($map, 'predator', $predatorsQty);
-        $wereHerbivoresSpawn = $this->spawnEntitiesOnTheMap($map, 'herbivore', $herbivoresQty);
-        $wereGrassSpawn = $this->spawnEntitiesOnTheMap($map, 'grass', 15);
-        if ($werePredatorsSpawn && $wereHerbivoresSpawn) {
-            return true;
-        }
-        return false;
+        $this->spawnEntitiesOnTheMap($map, 'predator', $predatorsQty);
+        $this->spawnEntitiesOnTheMap($map, 'herbivore', $herbivoresQty);
+        $this->spawnEntitiesOnTheMap($map, 'grass', 15);
+        $this->spawnEntitiesOnTheMap($map, 'rock', 10);
     }
 
-    private function spawnEntitiesOnTheMap(Map $map, $type, $qty): bool
+    public function initTest(Map $map)
+    {
+        $map->mapArr[4][1] = new Herbivore();
+        $map->mapArr[4][1]->y = 4;
+        $map->mapArr[4][1]->x = 1;
+        $map->mapArr[6][5] = new Predator();
+        $map->mapArr[6][5]->y = 6;
+        $map->mapArr[6][5]->x = 5;
+        $map->mapArr[8][5] = new Grass();
+        $map->mapArr[8][5]->y = 8;
+        $map->mapArr[8][5]->x = 5;
+    }
+
+    public function spawnEntitiesOnTheMap(Map $map, $type, $qty): bool
     {
         $counter = 0;
         while ($qty >= $counter) {

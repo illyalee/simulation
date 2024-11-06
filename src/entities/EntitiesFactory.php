@@ -16,6 +16,9 @@ class EntitiesFactory
             case 'grass':
                 return new Grass();
                 break;
+            case 'rock':
+                return new Rock();
+                break;
         }
     }
 }

@@ -10,6 +10,7 @@ class Simulation
     public Render $render;
     public Actions $actions;
     public Coordinates $coordinates;
+    public int $counter;
 
     public function __construct(Map $map)
     {
@@ -17,30 +18,32 @@ class Simulation
         $this->render = new Render();
         $this->actions = new Actions();
         $this->coordinates = new Coordinates(count($this->map->getMap()));
-        $wereCreaturesSpawn = $this->actions->initActions->initCreatures($this->map, 2, 6);
-        if (!$wereCreaturesSpawn) {
-            echo "cant spawn creatures, too much..";
-            die;
-        }
-        $this->render->showMap($this->map->mapArr);
+        $this->counter = 0;
+        $wereCreaturesSpawn = $this->actions->initActions->initCreatures($this->map, 2, 4);
     }
 
-    public function next_turn(): bool
+    public function next_turn(): void
     {
-        $this->render->showMap($this->map->mapArr);
         sleep(1);
-        return $this
-            ->actions
-            ->turnActions
-            ->moveAllCreatures($this->map, $this->coordinates, $this->render);
+        $this->render->showMap($this->map->mapArr);
+        $this->actions->turnActions->moveAllCreatures($this->map, $this->coordinates, $this->render);
+        $isHerbivoresAlive = $this->actions->turnActions->isHerbivoresAlive($this->map, $this->coordinates);
+        if ($isHerbivoresAlive === false) {
+            $this->actions->initActions->spawnEntitiesOnTheMap($this->map, 'herbivore', 3);
+        }
+        $isEnoughGrass = $this->actions->turnActions->isEnoughGrass($this->map, $this->coordinates);
+        if ($isEnoughGrass === false) {
+            $this->actions->initActions->spawnEntitiesOnTheMap($this->map, 'grass', 3);
+        }
     }
 
     public function start_simulation(): void
     {
         $continue = true;
-        $counter = 0;
         while ($continue) {
-            $continue = $this->next_turn();
+            $this->next_turn();
+            $this->counter++;
+            $continue = !($this->counter > 100);
         }
         $this->render->showMap($this->map->mapArr);
     }

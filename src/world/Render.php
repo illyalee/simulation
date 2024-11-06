@@ -15,6 +15,7 @@ class Render
 
     public function showMap($map)
     {
+        system('clear');
         foreach ($map as $row) {
             echo "\n";
             foreach ($row as $cell) {
@@ -22,7 +23,7 @@ class Render
                     echo " " . $this->animal_icons[strtolower(get_class($cell))];
                     continue;
                 }
-                echo " 🟫";
+                echo " 🟧";
             }
         }
         echo "\n";

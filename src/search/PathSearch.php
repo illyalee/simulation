@@ -11,7 +11,7 @@ require_once 'Queue.php';
 
 class PathSearch
 {
-    public function findPath($start_coords, Map $map)
+    public function findPath($start_coords, Map $map, $coordinates): array
     {
         $start_node_class = str_replace(
             'Src\\Entities\\',
@@ -19,7 +19,7 @@ class PathSearch
             get_class($map->mapArr[$start_coords[0]][$start_coords[1]])
         );
         $queue = new Queue();
-        $nodes = $this->initNodes($map, $start_node_class);
+        $nodes = $this->initNodes($map, $start_node_class, $coordinates);
         $start_node = $nodes[$start_coords[0]][$start_coords[1]];
         $start_node->visited = true;
         $start_node->come_from = 'start_node';
@@ -37,12 +37,14 @@ class PathSearch
                 }
             }
         }
+        return [];
     }
 
     private function getCoordsList(Node $node): array
     {
         $coords = array();
-        $coords[] = ['y' => $node->y, 'x' => $node->x];
+        //to delete ?
+//        $coords[] = ['y' => $node->y, 'x' => $node->x];
         while ($node->come_from !== 'start_node') {
             $coords[] = ['y' => $node->come_from->y, 'x' => $node->come_from->x];
             $node = $node->come_from;
@@ -62,7 +64,7 @@ class PathSearch
         return false;
     }
 
-    private function initNodes(Map $map, $start_node_class): array
+    private function initNodes(Map $map, $start_node_class, $coordinates): array
     {
         $nodesArr = [];
         for ($i = 0; $i < count($map->mapArr); $i++) {
@@ -78,23 +80,23 @@ class PathSearch
             }
             $nodesArr[] = $row;
         }
-        $this->addChildNodes($nodesArr, $start_node_class);
+        $this->addChildNodes($nodesArr, $start_node_class, $coordinates);
         return $nodesArr;
     }
 
-    private function addChildNodes($nodesArr, $start_node_class): void
+    private function addChildNodes($nodesArr, $start_node_class, Coordinates $coordinates): void
     {
         $mapWidth = count($nodesArr[0]);
         $mapHeight = count($nodesArr);
         for ($y = 0; $y < $mapHeight; $y++) {
             for ($x = 0; $x < $mapWidth; $x++) {
                 $currentNode = $nodesArr[$y][$x];
-                $leftSideChild = ($x - 1) >= 0 ? $nodesArr[$y][$x - 1] : null;
-                $rightSideChild = ($x + 1) < $mapWidth ? $nodesArr[$y][$x + 1] : null;
-                $upSideChild = ($y - 1) >= 0 ? $nodesArr[$y - 1][$x] : null;
-                $downSideChild = ($y + 1) < $mapWidth ? $nodesArr[$y + 1][$x] : null;
-                foreach ([$leftSideChild, $rightSideChild, $upSideChild, $downSideChild] as $childNode) {
-                    //$childNode == null, то есть за пределами карты
+                $neighborsCoordsList = $coordinates->getCoordsInRangeByPoint($y, $x);
+                $neighborsArr = [];
+                foreach ($neighborsCoordsList as $coords) {
+                    $neighborsArr[] = $nodesArr[$coords[0]][$coords[1]];
+                }
+                foreach ($neighborsArr as $childNode) {
                     if ($childNode == null) {
                         continue;
                     }

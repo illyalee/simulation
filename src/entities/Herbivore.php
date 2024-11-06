@@ -8,17 +8,17 @@ use Src\Search\PathSearch;
 require_once "Creature.php";
 require_once __DIR__ . "/../search/PathSearch.php";
 
-
 class Herbivore extends Creature
 {
     public int $health = 10;
+    public int $speed = 2;
 
     public function makeMove(Map $map, $coordinates): bool
     {
         if ($this->tryToAttack($map, $coordinates)) {
             return true;
         }
-        $this->changePosition($map);
+        $this->changePosition($map, $coordinates);
         return $this->tryToAttack($map, $coordinates);
     }
 
@@ -44,7 +44,6 @@ class Herbivore extends Creature
         return null;
     }
 
-
     private function attack($pray, Map $map): void
     {
         if ($pray) {
@@ -53,12 +52,17 @@ class Herbivore extends Creature
         }
     }
 
-    private function changePosition(Map $map): void
+    private function changePosition(Map $map, $coordinates): void
     {
         $pathSearch = new PathSearch();
-        $coords = $pathSearch->findPath([$this->y, $this->x], $map);
-        if ($coords) {
-            $map->changeCreaturePosition($this->y, $this->x, $coords[1]['y'], $coords[1]['x']);
+        $coords = $pathSearch->findPath([$this->y, $this->x], $map, $coordinates);
+        if (empty($coords)) {
+            return;
         }
+        if (count($coords) > 3) {
+            $map->changeCreaturePosition($this->y, $this->x, $coords[$this->speed]['y'], $coords[$this->speed]['x']);
+            return;
+        }
+        $map->changeCreaturePosition($this->y, $this->x, $coords[1]['y'], $coords[1]['x']);
     }
 }

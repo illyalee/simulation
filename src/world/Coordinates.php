@@ -2,12 +2,11 @@
 
 namespace Src\World;
 
-use Src\Entities\Creature;
-use Src\Entities\Entity;
+use Src\Entities\{Creature, Entity, Grass, Rock, Predator, Herbivore};
 
 class Coordinates
 {
-    private readonly int $BORDER_OFFSET;
+    private int $BORDER_OFFSET;
 
     public function __construct(int $map_length)
     {
@@ -25,6 +24,35 @@ class Coordinates
             }
         }
         return $creatureCoords;
+    }
+
+    public function getAllHerbivoresCoords(Map $map): array
+    {
+        $allCreaturesCoords = $this->getAllCreaturesCoords($map);
+        if (empty($allCreaturesCoords)) {
+            return false;
+        }
+        $herbivoreCoords = [];
+        foreach ($allCreaturesCoords as $coords) {
+            $entity = $map->getEntity($coords['y'], $coords['x']);
+            if ($entity instanceof Herbivore) {
+                $herbivoreCoords[] = $coords;
+            }
+        }
+        return $herbivoreCoords;
+    }
+
+    public function getAllGrassCoords(Map $map): array
+    {
+        $grassCoords = [];
+        foreach ($map->mapArr as $row) {
+            foreach ($row as $cell) {
+                if ($cell instanceof Grass) {
+                    $grassCoords[] = ['y' => $cell->getY(), 'x' => $cell->getX()];
+                }
+            }
+        }
+        return $grassCoords;
     }
 
     public static function getFreeCellsCoords(Map $map): array
@@ -46,10 +74,14 @@ class Coordinates
     {
         $coordsInRange = [];
         $offsets = [
-            [-1, 0], // up
-            [1, 0],  // down
-            [0, -1], // left
-            [0, 1],  // right
+            [-1, 0],
+            [1, 0],
+            [0, -1],
+            [0, 1],
+            [-1, -1],
+            [1, 1],
+            [1, -1],
+            [-1, 1],
         ];
 
         foreach ($offsets as [$dy, $dx]) {
