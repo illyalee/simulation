@@ -10,8 +10,7 @@ require_once __DIR__ . "/../search/PathSearch.php";
 
 class Herbivore extends Creature
 {
-    public int $health = 10;
-    public int $speed = 2;
+    private int $speed = 2;
 
     public function makeMove(Map $map, $coordinates): bool
     {
@@ -24,7 +23,7 @@ class Herbivore extends Creature
 
     private function tryToAttack(Map $map, $coordinates): bool
     {
-        $prey = $this->searchFoodAround($this->y, $this->x, $map, $coordinates);
+        $prey = $this->searchFoodAround($this->getY(), $this->getX(), $map, $coordinates);
         if ($prey) {
             $this->attack($prey, $map);
             return true;
@@ -34,7 +33,7 @@ class Herbivore extends Creature
 
     private function searchFoodAround($pointY, $pointX, Map $map, Coordinates $coordinates): Grass|null
     {
-        $coordsInRange = $coordinates->getCoordsInRangeByPoint($pointY, $pointX, $map, $coordinates);
+        $coordsInRange = $coordinates->getCoordsInRangeByPoint($pointY, $pointX);
         foreach ($coordsInRange as [$y, $x]) {
             $entity = $map->getEntity($y, $x);
             if ($entity instanceof Grass) {
@@ -44,25 +43,30 @@ class Herbivore extends Creature
         return null;
     }
 
-    private function attack($pray, Map $map): void
+    private function attack(Grass $pray, Map $map): void
     {
         if ($pray) {
             $this->setHealth($this->getHealth() + 3);
-            $map->unsetEntity($pray->y, $pray->x);
+            $map->unsetEntity($pray->getY(), $pray->getX());
         }
     }
 
     private function changePosition(Map $map, $coordinates): void
     {
         $pathSearch = new PathSearch();
-        $coords = $pathSearch->findPath([$this->y, $this->x], $map, $coordinates);
+        $coords = $pathSearch->findPath([$this->getY(), $this->getX()], $map, $coordinates);
         if (empty($coords)) {
             return;
         }
         if (count($coords) > 3) {
-            $map->changeCreaturePosition($this->y, $this->x, $coords[$this->speed]['y'], $coords[$this->speed]['x']);
+            $map->changeCreaturePosition(
+                $this->getY(),
+                $this->getX(),
+                $coords[$this->speed]['y'],
+                $coords[$this->speed]['x']
+            );
             return;
         }
-        $map->changeCreaturePosition($this->y, $this->x, $coords[1]['y'], $coords[1]['x']);
+        $map->changeCreaturePosition($this->getY(), $this->getX(), $coords[1]['y'], $coords[1]['x']);
     }
 }

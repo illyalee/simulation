@@ -2,7 +2,7 @@
 
 namespace Src\World;
 
-use Src\Entities\{Creature, Entity, Grass, Rock, Predator, Herbivore};
+use Src\Entities\{Creature, Entity, Grass, Herbivore};
 
 class Coordinates
 {
@@ -16,7 +16,7 @@ class Coordinates
     public function getAllCreaturesCoords(Map $map): array
     {
         $creatureCoords = [];
-        foreach ($map->mapArr as $row) {
+        foreach ($map->getMap() as $row) {
             foreach ($row as $cell) {
                 if ($cell instanceof Creature) {
                     $creatureCoords[] = ['y' => $cell->getY(), 'x' => $cell->getX()];
@@ -26,7 +26,7 @@ class Coordinates
         return $creatureCoords;
     }
 
-    public function getAllHerbivoresCoords(Map $map): array
+    public function getAllHerbivoresCoords(Map $map): array|false
     {
         $allCreaturesCoords = $this->getAllCreaturesCoords($map);
         if (empty($allCreaturesCoords)) {
@@ -45,7 +45,7 @@ class Coordinates
     public function getAllGrassCoords(Map $map): array
     {
         $grassCoords = [];
-        foreach ($map->mapArr as $row) {
+        foreach ($map->getMap() as $row) {
             foreach ($row as $cell) {
                 if ($cell instanceof Grass) {
                     $grassCoords[] = ['y' => $cell->getY(), 'x' => $cell->getX()];

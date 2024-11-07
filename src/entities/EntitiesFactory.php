@@ -9,16 +9,12 @@ class EntitiesFactory
         switch ($className) {
             case 'predator':
                 return new Predator();
-                break;
             case 'herbivore':
                 return new Herbivore();
-                break;
             case 'grass':
                 return new Grass();
-                break;
             case 'rock':
                 return new Rock();
-                break;
         }
     }
 }

@@ -10,8 +10,7 @@ require_once __DIR__ . "/../search/PathSearch.php";
 
 class Predator extends Creature
 {
-    public int $power = 3;
-    public int $health = 10;
+    private int $power = 3;
 
     public function makeMove(Map $map, $coordinates): bool
     {
@@ -24,7 +23,7 @@ class Predator extends Creature
 
     private function tryToAttack(Map $map, $coordinates): bool
     {
-        $prey = $this->searchFoodAround($this->y, $this->x, $map, $coordinates);
+        $prey = $this->searchFoodAround($this->getY(), $this->getX(), $map, $coordinates);
         if ($prey) {
             $this->attack($prey, $map);
             return true;
@@ -47,13 +46,11 @@ class Predator extends Creature
     private function changePosition(Map $map, $coordinates): void
     {
         $pathSearch = new PathSearch();
-        $coords = $pathSearch->findPath([$this->y, $this->x], $map, $coordinates);
+        $coords = $pathSearch->findPath([$this->getY(), $this->getX()], $map, $coordinates);
         if (empty($coords)) {
             return;
         }
-        if ($coords) {
-            $map->changeCreaturePosition($this->y, $this->x, $coords[1]['y'], $coords[1]['x']);
-        }
+        $map->changeCreaturePosition($this->getY(), $this->getX(), $coords[1]['y'], $coords[1]['x']);
     }
 
     private function attack(Herbivore $pray, Map $map): void
@@ -61,7 +58,7 @@ class Predator extends Creature
         $pray->setHealth($pray->getHealth() - $this->power);
 
         if ($pray->getHealth() <= 0) {
-            $map->unsetEntity($pray->y, $pray->x);
+            $map->unsetEntity($pray->getY(), $pray->getX());
         }
     }
 }

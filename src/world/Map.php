@@ -6,7 +6,7 @@ use Src\Entities\Entity;
 
 class Map
 {
-    public array $mapArr = [];
+    private array $mapArr = [];
 
     public function __construct(int $columns = 10, int $rows = 10)
     {

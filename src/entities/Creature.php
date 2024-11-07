@@ -8,7 +8,7 @@ require_once "Entity.php";
 
 abstract class Creature extends Entity
 {
-    public int $health;
+    private int $health = 3;
 
     public function getHealth(): int
     {
@@ -24,10 +24,5 @@ abstract class Creature extends Entity
 
     private function attack($pray, Map $map)
     {
-    }
-
-    public function getName()
-    {
-        return $this->name;
     }
 }

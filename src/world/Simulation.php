@@ -6,11 +6,11 @@ use Src\Actions\{Actions, InitActions, TurnActions};
 
 class Simulation
 {
-    public Map $map;
-    public Render $render;
-    public Actions $actions;
-    public Coordinates $coordinates;
-    public int $counter;
+    private Map $map;
+    private Render $render;
+    private Actions $actions;
+    private Coordinates $coordinates;
+    private int $counter;
 
     public function __construct(Map $map)
     {
@@ -19,13 +19,13 @@ class Simulation
         $this->actions = new Actions();
         $this->coordinates = new Coordinates(count($this->map->getMap()));
         $this->counter = 0;
-        $wereCreaturesSpawn = $this->actions->initActions->initCreatures($this->map, 2, 4);
+        $this->actions->initActions->initCreatures($this->map, 2, 3);
     }
 
     public function next_turn(): void
     {
         sleep(1);
-        $this->render->showMap($this->map->mapArr);
+        $this->render->showMap($this->map);
         $this->actions->turnActions->moveAllCreatures($this->map, $this->coordinates, $this->render);
         $isHerbivoresAlive = $this->actions->turnActions->isHerbivoresAlive($this->map, $this->coordinates);
         if ($isHerbivoresAlive === false) {
@@ -39,12 +39,13 @@ class Simulation
 
     public function start_simulation(): void
     {
+        $iteration = readline("How many iterations would you want: (1 to ~)");
         $continue = true;
         while ($continue) {
             $this->next_turn();
             $this->counter++;
-            $continue = !($this->counter > 100);
+            $continue = !($this->counter > $iteration);
         }
-        $this->render->showMap($this->map->mapArr);
+        $this->render->showMap($this->map);
     }
 }

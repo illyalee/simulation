@@ -4,10 +4,10 @@ namespace Src\Entities;
 
 abstract class Entity
 {
-    public int $y;
-    public int $x;
+    private int $y;
+    private int $x;
 
-    public function getY()
+    public function getY(): int
     {
         return $this->y;
     }
@@ -18,7 +18,7 @@ abstract class Entity
         $this->x = $newX;
     }
 
-    public function getX()
+    public function getX(): int
     {
         return $this->x;
     }

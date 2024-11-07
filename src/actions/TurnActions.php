@@ -2,19 +2,18 @@
 
 namespace Src\Actions;
 
-use Src\World\{Map, Coordinates, Render};
-use src\Entities\{Creature, Herbivore, Predator};
-use Src\Actions\InitActions;
+use Src\World\{Map, Coordinates};
+use src\Entities\{Creature};
 
 class TurnActions
 {
-    public function moveAllCreatures(Map $map, Coordinates $coordinates, Render $render)
+    public function moveAllCreatures(Map $map, Coordinates $coordinates): void
     {
         $creaturesCoords = $coordinates->getAllCreaturesCoords($map);
         foreach ($creaturesCoords as $creatureCoords) {
             $entity = $map->getEntity($creatureCoords['y'], $creatureCoords['x']);
             if ($entity instanceof Creature) {
-                $entity?->makeMove($map, $coordinates);
+                $entity->makeMove($map, $coordinates);
             }
         }
     }

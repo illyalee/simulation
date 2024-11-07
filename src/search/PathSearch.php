@@ -16,7 +16,7 @@ class PathSearch
         $start_node_class = str_replace(
             'Src\\Entities\\',
             "",
-            get_class($map->mapArr[$start_coords[0]][$start_coords[1]])
+            get_class($map->getMap()[$start_coords[0]][$start_coords[1]])
         );
         $queue = new Queue();
         $nodes = $this->initNodes($map, $start_node_class, $coordinates);
@@ -43,8 +43,7 @@ class PathSearch
     private function getCoordsList(Node $node): array
     {
         $coords = array();
-        //to delete ?
-//        $coords[] = ['y' => $node->y, 'x' => $node->x];
+        $coords[] = ['y' => $node->y, 'x' => $node->x];
         while ($node->come_from !== 'start_node') {
             $coords[] = ['y' => $node->come_from->y, 'x' => $node->come_from->x];
             $node = $node->come_from;
@@ -56,10 +55,8 @@ class PathSearch
     {
         if ($start_node_class == 'Predator' && $node->content instanceof Herbivore) {
             return true;
-        } else {
-            if ($start_node_class == 'Herbivore' && $node->content instanceof Grass) {
-                return true;
-            }
+        } elseif ($start_node_class == 'Herbivore' && $node->content instanceof Grass) {
+            return true;
         }
         return false;
     }
@@ -67,10 +64,10 @@ class PathSearch
     private function initNodes(Map $map, $start_node_class, $coordinates): array
     {
         $nodesArr = [];
-        for ($i = 0; $i < count($map->mapArr); $i++) {
+        for ($i = 0; $i < count($map->getMap()); $i++) {
             $row = [];
-            for ($j = 0; $j < count($map->mapArr[$i]); $j++) {
-                $cell = $map->mapArr[$i][$j];
+            for ($j = 0; $j < count($map->getMap()[0]); $j++) {
+                $cell = $map->getEntity($i, $j);
                 if ($cell instanceof Entity) {
                     $node = new Node($i, $j, $cell);
                     $row[] = $node;
